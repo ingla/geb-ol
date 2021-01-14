@@ -8,6 +8,7 @@ class GebOlApplicationTests {
 
 	@Test
 	void contextLoads() {
+		assert(true);
 	}
 
 }
