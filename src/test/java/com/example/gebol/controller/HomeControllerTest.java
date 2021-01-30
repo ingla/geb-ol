@@ -1,4 +1,4 @@
-package com.example.gebol.home;
+package com.example.gebol.controller;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

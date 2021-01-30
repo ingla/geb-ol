@@ -1,4 +1,4 @@
-package com.example.gebol.home;
+package com.example.gebol.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

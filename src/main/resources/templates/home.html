@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>GEB OL</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
+
 <h1>Velkommen til GEB OL!</h1>
 <img th:src="@{/images/olympic-rings.png}"/>
+
+<!--<form action="#" th:action="@{/seedstartermng}" th:object="${seedStarter}" method="post">-->
+
+<div class="container">
+    <div class="center">
+        <form th:action="@{/discipline}" method="get">
+            <input type="submit" value="Add new discipline" />
+        </form>
+    </div>
+</div>
+
 </body>
 </html>
