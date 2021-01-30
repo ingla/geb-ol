@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add discipline</title>
+</head>
+<body>
+<div>Create a new discipline in your olympic games</div>
+<form method="post" th:object="${disciplineObject}">
+    <h3>Name</h3>
+    <input type="text" th:field="*{name}">
+    <h3>Location</h3>
+    <input type="text" th:field="*{location}">
+    <h3>Date</h3>
+    <input type="datetime-local" th:field="*{date}"/>
+    <h3>Does the discipline follow a cup system?</h3>
+<!--    <input type="checkbox" th:field="*{isCup}" />-->
+    <button>Submit discipline</button>
+    </div>
+
+</form>
+</body>
+</html>
