@@ -1,7 +1,7 @@
 Bowling spilles over to serier der den beste serien til hver deltager er tellende.
 
 Deltagerene rangeres etter:
-   -beste (flest poeng i en) enkeltserie, ved likhet:
-   -flest poeng totalt i begge seriene (aka beste dårligste-serie), ved likhet:
-   -tidligst fullførte besteserie, ved uklarhet eller uenighet:
-   -stein-saks-papir, myntkast etc.
+   -beste (flest poeng i en) enkeltserie
+   -ved likhet, flest poeng totalt i begge seriene (aka beste dårligste-serie)
+   -ved likhet, tidligst fullførte besteserie
+   -ved uklarhet eller uenighet, stein-saks-papir, myntkast etc.
