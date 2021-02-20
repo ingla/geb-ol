@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Discipline list</title>
+</head>
+<body>
+<h1>Disciplines of this year's olympic games</h1>
+
+<tr th:each="discipline : ${disciplineList}">
+    <p th:text="${discipline.name}"></p>
+</tr>
+
+</form>
+</body>
+</html>

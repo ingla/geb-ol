@@ -12,12 +12,19 @@
 <h1>Velkommen til GEB OL!</h1>
 <img th:src="@{/images/olympic-rings.png}"/>
 
-<!--<form action="#" th:action="@{/seedstartermng}" th:object="${seedStarter}" method="post">-->
+<div class="container">
+    <div class="center">
+        <form th:action="@{/add-discipline}" method="get">
+            <input type="submit" value="Add new discipline" />
+        </form>
+
+    </div>
+</div>
 
 <div class="container">
     <div class="center">
-        <form th:action="@{/discipline}" method="get">
-            <input type="submit" value="Add new discipline" />
+        <form th:action="@{/disciplines}" method="get">
+            <input type="submit" value="View disciplines" />
         </form>
     </div>
 </div>
