@@ -1,6 +1,8 @@
 import random as rnd
 
-GOLD_LIMIT = 7
+GOLD_LIMIT = 10
+ANTALL_SKUDD = 0
+TREFFGRENSE = 0.9
 
 class Player:
     def __init__(self, name):
@@ -21,25 +23,28 @@ def active_players(players):
     return [p for p in players if not p.out]
 
 def period(players):
+    global ANTALL_SKUDD, TREFFGRENSE
+    
     actives = len(active_players(players))
     worst_player = None
-    worst_shot = 0.9
+    worst_shot = TREFFGRENSE
     first = actives == len(players)
     winner = actives == 1
     for i, p in enumerate(players):
         p.out = p.out and not first
         if p.out:
             continue
-        print "Neste deltager er", p
-        shot = input("  Hoyde: ")/100.0
-        print "  Skudd fra", p, ":" , "%.2f" %shot
+        #print "Neste deltager er", p
+        shot = p.shoot() # input("  Hoyde: ")/100.0
+        ANTALL_SKUDD += 1
+        #print "  Skudd fra", p, ":" , "%.2f" %shot
         if shot < worst_shot:
             worst_shot = shot
             worst_player = p
         if shot < 0.2 or winner: # you're out if shoot out or alone
             p.out = True
-        if shot > 0.9 or winner:
-            p.points += (shot > 0.9) + winner
+        if shot > TREFFGRENSE or winner:
+            p.points += (shot > TREFFGRENSE) + winner
             while i > 0 and p.points > players[i-1].points: #advance in the shooting order
                 players[i], players[i-1] = players[i-1], players[i]
                 i -= 1
@@ -77,14 +82,19 @@ def game(players):
     while(max_score(players) < GOLD_LIMIT):
         i += 1
         print "Hovedrunde", i
+        #print "Stilling:"
+        #for j, p in enumerate(players):
+        #    print " ", j+1, p.name, p.points
+        #raw_input()
         #print (max_score(players))
         for p in players:
             p.out = False
         players = hovedrunde(players, i)
-
+        
 if __name__ == "__main__":
     aplayers = [Player(p) for p in ["Sigurd", "Peder", "Sindre", "Kiple", "Halvorsen", "Tom", "Brana", "Jervell", "Lilleeng", "Hakon"]]
     rnd.shuffle(aplayers)
     game(aplayers)
+    print " ", ANTALL_SKUDD, ANTALL_SKUDD/len(aplayers)
 
 
