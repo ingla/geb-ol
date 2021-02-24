@@ -10,9 +10,15 @@ class Player:
         self.name = name
         self.points = 0
         self.out = False
+        self.shot_count = 0
+        self.hit_count = 0
 
     def shoot(self):
-        return rnd.random()
+        self.shot_count += 1
+        s = rnd.random()
+        if s > HIT_THRESHOLD:
+            self.hit_count += 1
+        return s
     
     def __repr__(self):
         s = self.name + ' (' + str(self.points) + ')'
@@ -85,14 +91,14 @@ def printStandings(players):
     for j, p in enumerate(players):
         print "%2d %10s %2d" %(j+1,p.name,p.points)
 
-def hovedrunde(players, r):
+def full_round(players, r):
     i = 0
     while len(active_players(players)) > 0 and max_score(players) < GOLD_LIMIT:
         i += 1
         fstString = " Delrunde %d.%d." %(r,i)
         print "%-31s%d igjen" %(fstString,len(active_players(players)))
         players = period(players)
-        
+        #raw_input()
     return players
 
 def max_score(players):
@@ -109,12 +115,18 @@ def game(players):
         print "Stilling:"
         for p in players:
             p.out = False
-        players = hovedrunde(players, i)
+        players = full_round(players, i)
         
 if __name__ == "__main__":
-    actual_players = [Player(p) for p in ["Sigurd", "Peder", "Sindre", "Kiple", "Halvorsen", "Tom", "Brana", "Jervell", "Lilleeng", "Hakon", "Ingvild", "Herman"]]
+    actual_players = [Player(p) for p in ["Sigurd", "Peder", "Sindre", "Kiple", "Halvorsen", "Tom", "Brana", "Jervell", "Lilleeng", "Hakon", "Ingvild", "Herman", "Kaare"]]
     rnd.shuffle(actual_players)
     game(actual_players)
     print "Antall skudd var", SHOT_COUNT, "som i snitt blir", SHOT_COUNT/len(actual_players), "per deltager"
-
+    for p in actual_players:
+        if p.shot_count == 0: #check to avoid division-by-zero
+            ratio = 0
+        else:
+            ratio = 100.0*p.hit_count/p.shot_count
+        
+        print "%12s %3d/%-3d Treffprosent: %5.1f %s" %(p.name, p.hit_count, p.shot_count, ratio, chr(37))
 
