@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Discipline details</title>
+</head>
+<body>
+<h1 th:text="${discipline.name}"> Name</h1>
+<p th:text="${discipline.location}"> Location</p>
+<p th:text="${#temporals.formatISO(discipline.date)}"> Date</p>
+<p th:text="${discipline.isCup}"> Cup </p>
+</body>
+</html>
