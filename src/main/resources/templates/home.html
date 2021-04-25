@@ -1,31 +1,53 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
     <meta charset="UTF-8">
     <title>GEB OL</title>
+    <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
-
-<h1>Velkommen til GEB OL!</h1>
-<img th:src="@{/images/olympic-rings.png}"/>
-
-<div class="container">
-    <div class="center">
-        <form th:action="@{/add-discipline}" method="get">
-            <input type="submit" value="Add new discipline" />
-        </form>
-
+<div class="header">
+    <div class="inner_header">
+        <a th:href="@{/}">
+            <img th:src="@{/images/olympic-rings-geb.png}">
+            <h2>
+                202<span style="letter-spacing:0; color: #AAAAAA;" >1</span>
+            </h2>
+        </a>
     </div>
 </div>
+<main>
+    <div class="container">
+            <div class="nav-button">
+                <a th:href="@{/disciplines}">
+                    Grener
+                </a>
+            </div>
+            <div class="nav-button">
+                <a th:href="@{/add-discipline}">
+                    Ny gren
+                </a>
+            </div>
 
-<div class="container">
-    <div class="center">
-        <form th:action="@{/disciplines}" method="get">
-            <input type="submit" value="View disciplines" />
-        </form>
+            <div class="nav-button">
+                <a th:href="@{/standings}">
+                    Sammenlagt
+                </a>
+            </div>
+            <div class="nav-button">
+                <a th:href="@{/participants}">
+                    Deltagere
+                </a>
+            </div>
+    </div>
+</main>
+<!-- Footer -->
+<div class="footer">
+    <div class="inner_footer">
+        Laget av Ingvild og Sigurd
     </div>
 </div>
 
