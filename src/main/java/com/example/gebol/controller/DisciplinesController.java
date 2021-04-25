@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.DayOfWeek;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 @Slf4j
 @Controller
@@ -40,6 +43,8 @@ public class DisciplinesController {
         Discipline d = disciplineRepository.findOne(name);
         System.out.println("Found d" + d);
         model.addAttribute("discipline", d);
+        String dow = d.getDate().getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("no"));
+        model.addAttribute("weekday", dow);
         return "discipline-details";
     }
 }
