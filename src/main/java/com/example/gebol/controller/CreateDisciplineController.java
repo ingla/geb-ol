@@ -18,12 +18,12 @@ import java.time.LocalDateTime;
 @Slf4j
 @Controller
 @RequestMapping("/add-discipline")
-public class DisciplineController {
+public class CreateDisciplineController {
 
     private DisciplineRepository disciplineRepository;
 
     @Autowired
-    public DisciplineController(DisciplineRepository disciplineRepository) {
+    public CreateDisciplineController(DisciplineRepository disciplineRepository) {
         this.disciplineRepository = disciplineRepository;
     }
 

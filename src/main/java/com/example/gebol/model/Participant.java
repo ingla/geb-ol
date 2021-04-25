@@ -1,13 +1,21 @@
 package com.example.gebol.model;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotBlank;
 
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Participant {
 
-    private final String id;
-    private final String firstName;
-    private final String lastname;
+    public Participant(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    private Long id;
+
+    @NotBlank
+    private String name;
 }
