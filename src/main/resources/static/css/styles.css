@@ -20,6 +20,11 @@
     margin: 15px;
     line-height: 50px;
 }
+
+.error{
+    color:#ff0000;
+}
+
 table{
     margin: auto;
 }
