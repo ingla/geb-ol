@@ -1,5 +1,8 @@
+com/example/gebol/controller/DisciplinesController.class
+com/example/gebol/model/Discipline.class
 com/example/gebol/controller/DisciplineController.class
 com/example/gebol/model/Participant.class
 com/example/gebol/controller/HomeController.class
+com/example/gebol/data/DisciplineRepository.class
+com/example/gebol/data/JdbcDisciplineRepository.class
 com/example/gebol/GebOlApplication.class
-com/example/gebol/model/Discipline.class

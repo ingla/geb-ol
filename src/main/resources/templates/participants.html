@@ -21,6 +21,14 @@
 </div>
 <main>
 
+    <tr th:each="participant : ${participantList}">
+        <p>
+            <a th:href="@{/participants/{id}(id=${participant.id})}">
+                <span th:text="${participant.name}"></span>
+            </a>
+        </p>
+    </tr>
+
 </main>
 <!-- Footer -->
 <div class="footer">
