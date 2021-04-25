@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -26,11 +28,18 @@ public class DisciplinesController {
     @GetMapping
     public String getDisciplineList(Model model) {
         log.info("getDisciplineList");
-
         Iterable<Discipline> list = disciplineRepository.findAll();
-        log.info(list.toString());
-
+        System.out.println(list);
         model.addAttribute("disciplineList", list);
         return "disciplines";
+    }
+
+    @GetMapping("/{name}")
+    public String getDisciplineItem(Model model, @PathVariable String name) {
+        log.info("getDisciplineItem");
+        Discipline d = disciplineRepository.findOne(name);
+        System.out.println("Found d" + d);
+        model.addAttribute("discipline", d);
+        return "discipline-details";
     }
 }

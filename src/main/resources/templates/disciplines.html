@@ -9,7 +9,12 @@
 <h1>Disciplines of this year's olympic games</h1>
 
 <tr th:each="discipline : ${disciplineList}">
-    <p th:text="${discipline.name}"></p>
+    <p>
+    <a th:href="@{/disciplines/{name}(name=${discipline.name})}">
+        <span th:text="${discipline.name}">
+        </span>
+    </a>
+    </p>
 </tr>
 
 </form>

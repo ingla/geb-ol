@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -33,9 +35,22 @@ public class JdbcDisciplineRepository implements DisciplineRepository {
                 this::mapRowToDiscipline);
     }
 
-    public Discipline findOne(String id) {
-        // TODO
-        return new Discipline();
+    public Discipline findOne(String name) {
+        log.info("findOne");
+
+        String sql = "select * from Discipline where lower(name) = lower(?)";
+        return jdbc.queryForObject(
+                sql,
+                (rs, rowNum) ->
+                        new Discipline(
+                                rs.getLong("id"),
+                                rs.getString("name"),
+                                rs.getString("location"),
+                                rs.getTimestamp("date").toLocalDateTime(),
+                                rs.getBoolean("isCup")),
+                name);
+
+
     }
 
     public Discipline save(Discipline discipline) {
@@ -59,7 +74,7 @@ public class JdbcDisciplineRepository implements DisciplineRepository {
 
     private Discipline mapRowToDiscipline(ResultSet rs, int rowNum) throws SQLException {
         Discipline d = new Discipline();
-        d.setId(rs.getString("id"));
+        d.setId(rs.getLong("id"));
         d.setName(rs.getString("name"));
         d.setLocation(rs.getString("location"));
 
