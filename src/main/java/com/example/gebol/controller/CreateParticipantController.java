@@ -42,7 +42,7 @@ public class CreateParticipantController {
 
         // Check if participant already exists in database.
         if (participantRepository.hasParticipant(participant.getName())) {
-            ObjectError objectError = new ObjectError("globalError", "Deltager finnes allerede");
+            ObjectError objectError = new ObjectError("globalError", "Deltager allerede lagt til");
             result.addError(objectError);
             return "add-participant";
 

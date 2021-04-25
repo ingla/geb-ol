@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
     <meta charset="UTF-8">
-    <title>GEB OL - Ny Gren</title>
+    <title>GEB OL - Ny Deltager</title>
     <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
@@ -20,7 +20,7 @@
     </div>
 </div>
 <main>
-    <h3>NY GREN</h3>
+    <h3>NY DELTAGER</h3>
     <form method="post" th:object="${participant}">
         <table>
             <tr>
@@ -30,7 +30,7 @@
                 </td>
             </tr>
             <tr th:if="${#fields.hasErrors('global')}">
-                <h3>Skjerp deg</h3>
+
                 <p th:each="err: ${#fields.errors('global')}" th:text="${err}" class="error" />
 
             </tr>
@@ -38,7 +38,7 @@
                 <td>
                     <table>
                         <td>
-                            <button >OPPRETT DELTAGER</button>
+                            <button >Legg til deltager</button>
                         </td>
 
                     </table>
