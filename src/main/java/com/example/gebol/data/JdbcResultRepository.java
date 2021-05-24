@@ -34,7 +34,7 @@ public class JdbcResultRepository implements ResultRepository {
 
     @Override
     public Result save(Result result) {
-        jdbc.update("insert into Result (disciplineId, participantId, result) values (?, ?, ?)",
+        jdbc.update("insert into Result (disciplineId, participantId, place) values (?, ?, ?)",
                 result.getDisciplineId(), result.getParticipantId(), result.getPlace());
         return result;
     }
@@ -45,5 +45,19 @@ public class JdbcResultRepository implements ResultRepository {
             save(result);
         }
         return results;
+    }
+
+    @Override
+    public List<Result> findByDisciplineId(Long disciplineId) {
+        String sql = "select * from Result where disciplineId = (?)";
+        return jdbc.query(sql, this::mapRowToResult, disciplineId);
+    }
+
+    private Result mapRowToResult(ResultSet rs, int rowNum) throws SQLException {
+        Result r = new Result();
+        r.setDisciplineId(rs.getLong("disciplineId"));
+        r.setParticipantId(rs.getLong("participantId"));
+        r.setPlace(rs.getInt("place"));
+        return r;
     }
 }

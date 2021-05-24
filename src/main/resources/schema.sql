@@ -14,5 +14,5 @@ name varchar(50) not null unique
 create table if not exists Result (
 disciplineId long not null,
 participantId long not null,
-result int not null
+place int not null
 )

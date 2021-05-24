@@ -34,7 +34,7 @@ public class JdbcParticipantRepository implements ParticipantRepository {
                 this::mapRowToDiscipline);
     }
 
-    public Participant findOne(String id) {
+    public Participant findOne(Long id) {
         String sql = "select * from Participant where lower(id) = lower(?)";
         return jdbc.queryForObject(
                 sql,

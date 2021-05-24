@@ -22,5 +22,5 @@ public class Result {
     private Long participantId;
 
     @NotNull
-    private int place;
+    private Integer place;
 }

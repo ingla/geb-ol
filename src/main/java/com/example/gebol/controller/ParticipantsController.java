@@ -31,7 +31,7 @@ public class ParticipantsController {
     }
 
     @GetMapping("/{id}")
-    public String getParticipantItem(Model model, @PathVariable String id) {
+    public String getParticipantItem(Model model, @PathVariable Long id) {
         Participant p = participantRepository.findOne(id);
         model.addAttribute("participant", p);
         return "participant-details";
