@@ -20,7 +20,14 @@
     </div>
 </div>
 <main>
-
+<h1>Sammenlagt</h1>
+    <table>
+        <tr th:each="result, itemStat : ${standingResults}">
+            <td th:text="${itemStat.index + 1}"></td>
+            <td th:text="${result.participantName}"></td>
+            <td th:text="${result.points}"></td>
+        </tr>
+    </table>
 </main>
     <!-- Footer -->
     <div class="footer">

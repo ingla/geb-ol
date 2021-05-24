@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Arrays;
+import java.util.List;
 
 @Repository
 @Slf4j
@@ -29,7 +30,7 @@ public class JdbcParticipantRepository implements ParticipantRepository {
         this.jdbc = jdbc;
     }
 
-    public Iterable<Participant> findAll() {
+    public List<Participant> findAll() {
         return jdbc.query(
 
                 "select * from Participant",
