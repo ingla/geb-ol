@@ -9,4 +9,5 @@ public interface ResultRepository {
     Result save(Result result);
     List<Result> saveAll(List<Result> results);
     List<Result> findByDisciplineId(Long disciplineId);
+    List<Result> findByParticipantId(Long participantId);
 }

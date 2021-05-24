@@ -7,4 +7,5 @@ public interface ParticipantRepository {
     Participant findOne(Long id);
     Boolean hasParticipant(String name);
     Participant save(Participant participant);
+    String getNameById(Long id);
 }

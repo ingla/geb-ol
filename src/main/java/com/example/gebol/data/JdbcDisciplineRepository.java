@@ -49,8 +49,12 @@ public class JdbcDisciplineRepository implements DisciplineRepository {
                                 rs.getTimestamp("date").toLocalDateTime(),
                                 rs.getBoolean("isCup")),
                 name);
+    }
 
-
+    public String getNameById(Long id) {
+        String sql = "select * from Discipline where id = (?)";
+        Discipline d = jdbc.queryForObject(sql, this::mapRowToDiscipline, id);
+        return d.getName();
     }
 
     public Discipline save(Discipline discipline) {

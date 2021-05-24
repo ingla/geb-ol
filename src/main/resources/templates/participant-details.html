@@ -20,6 +20,13 @@
 </div>
 <main>
     <h1 th:text="${participant.name}"> Name</h1>
+    <table>
+        <tr th:each="result : ${participantResults}">
+            <td th:text="${result.disciplineName}"></td>
+            <td th:text="${result.place}"></td>
+            <td th:text="${@pointCalculationService.getPointsForPlace(result.place)}"></td>
+        </tr>
+    </table>
 
 </main>
 <!-- Footer -->

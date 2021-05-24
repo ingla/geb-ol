@@ -4,6 +4,7 @@ import com.example.gebol.data.DisciplineRepository;
 import com.example.gebol.data.ParticipantRepository;
 import com.example.gebol.data.ResultRepository;
 import com.example.gebol.model.Discipline;
+import com.example.gebol.model.DisciplineResult;
 import com.example.gebol.model.Participant;
 import com.example.gebol.model.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -63,16 +64,16 @@ public class DisciplinesController {
         List<Result> results = resultRepository.findByDisciplineId(d.getId());
         results.sort(Comparator.comparing(Result::getPlace)); // Sort list on place
 
-        model.addAttribute("results", results);
-
-        // Create list of participant names
-        List<Participant> participants = results
+        // Map result list to DisciplineResult objects (includes participant names).
+        List <DisciplineResult> disciplineResults = results
                 .stream()
-                .map((res) -> participantRepository.findOne(res.getParticipantId()))
+                .map((res) -> new DisciplineResult(
+                        participantRepository.getNameById(res.getParticipantId()),
+                        res.getParticipantId(),
+                        res.getPlace()))
                 .collect(Collectors.toList());
-        log.info(participants.toString());
 
-        model.addAttribute("participants", participants);
+        model.addAttribute("disciplineResults", disciplineResults);
 
         return "discipline-details";
     }

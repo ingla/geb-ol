@@ -53,6 +53,12 @@ public class JdbcResultRepository implements ResultRepository {
         return jdbc.query(sql, this::mapRowToResult, disciplineId);
     }
 
+    @Override
+    public List<Result> findByParticipantId(Long participantId) {
+        String sql = "select * from Result where participantId = (?)";
+        return jdbc.query(sql, this::mapRowToResult, participantId);
+    }
+
     private Result mapRowToResult(ResultSet rs, int rowNum) throws SQLException {
         Result r = new Result();
         r.setDisciplineId(rs.getLong("disciplineId"));
