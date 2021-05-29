@@ -95,4 +95,9 @@ public class JdbcParticipantRepository implements ParticipantRepository {
         p.setName(rs.getString("name"));
         return p;
     }
+
+    public void deleteById(Long id) {
+        String sql = "delete from Participant where id = (?)";
+        jdbc.update(sql, id);
+    }
 }

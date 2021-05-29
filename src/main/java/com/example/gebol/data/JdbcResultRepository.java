@@ -59,6 +59,18 @@ public class JdbcResultRepository implements ResultRepository {
         return jdbc.query(sql, this::mapRowToResult, participantId);
     }
 
+    @Override
+    public List<Long> findAllDisciplineIds() {
+        String sql = "select distinct disciplineId from Result";
+        return jdbc.queryForList(sql, Long.class);
+    }
+
+    @Override
+    public void deleteByDisciplineId(Long id) {
+        String sql = "delete from Result where disciplineId = (?)";
+        jdbc.update(sql, id);
+    }
+
     private Result mapRowToResult(ResultSet rs, int rowNum) throws SQLException {
         Result r = new Result();
         r.setDisciplineId(rs.getLong("disciplineId"));

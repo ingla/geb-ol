@@ -13,37 +13,39 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/add-discipline")
-public class CreateDisciplineController {
+@RequestMapping("/delete-discipline")
+public class DeleteDisciplineController {
 
     private DisciplineRepository disciplineRepository;
 
     @Autowired
-    public CreateDisciplineController(DisciplineRepository disciplineRepository) {
+    public DeleteDisciplineController(DisciplineRepository disciplineRepository) {
         this.disciplineRepository = disciplineRepository;
     }
 
     @GetMapping
-    public String addDiscipline(Model model) {
-        log.info("addDiscipline");
+    public String deleteDiscipline(Model model) {
         model.addAttribute("discipline", new Discipline());
-        return "add-discipline";
+
+        List<Discipline> allDisciplines = disciplineRepository.findAll();
+        model.addAttribute("allDisciplines", allDisciplines);
+        return "delete-discipline";
     }
 
     @PostMapping
-    public String processDiscipline(@Valid @ModelAttribute Discipline discipline, Errors errors) {
-        log.info("processDiscipline in controller: new discpline " +
-                discipline.toString() + " was added");
-
+    public String processDelete(Model model, @ModelAttribute Discipline discipline, Errors errors) {
         if (errors.hasErrors()) {
-            return "add-discipline";
+            log.info("Errors" + errors.getAllErrors());
+            List<Discipline> allDisciplines = disciplineRepository.findAll();
+            model.addAttribute("allDisciplines", allDisciplines);
+            return "delete-discipline";
         }
 
-        disciplineRepository.save(discipline);
+        disciplineRepository.deleteById(discipline.getId());
         return "redirect:/admin/disciplines";
     }
 }

@@ -1,54 +1,52 @@
 package com.example.gebol.controller;
 
+import com.example.gebol.data.DisciplineRepository;
 import com.example.gebol.data.ParticipantRepository;
+import com.example.gebol.model.Discipline;
 import com.example.gebol.model.Participant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/add-participant")
-public class CreateParticipantController {
+@RequestMapping("/delete-participant")
+public class DeleteParticipantController {
 
     private ParticipantRepository participantRepository;
 
     @Autowired
-    public CreateParticipantController(ParticipantRepository participantRepository) {
+    public DeleteParticipantController(ParticipantRepository participantRepository) {
         this.participantRepository = participantRepository;
     }
 
     @GetMapping
-    public String addParticipant(Model model) {
+    public String deleteParticipant(Model model) {
         model.addAttribute("participant", new Participant());
-        return "add-participant";
+
+        List<Participant> allParticipants = participantRepository.findAll();
+        model.addAttribute("allParticipants", allParticipants);
+        return "delete-participant";
     }
 
     @PostMapping
-    public String processParticipant(@Valid @ModelAttribute Participant participant, BindingResult result, Errors errors) {
+    public String processDelete(Model model, @ModelAttribute Participant participant, Errors errors) {
         if (errors.hasErrors()) {
-            return "add-participant";
+            log.info("Errors" + errors.getAllErrors());
+            List<Participant> allParticipants = participantRepository.findAll();
+            model.addAttribute("allDisciplines", allParticipants);
+            return "delete-participant";
         }
 
-        // Check if participant already exists in database.
-        if (participantRepository.hasParticipant(participant.getName())) {
-            ObjectError objectError = new ObjectError("globalError", "Deltager allerede lagt til");
-            result.addError(objectError);
-            return "add-participant";
-
-        } else {
-            participantRepository.save(participant);
-        }
+        participantRepository.deleteById(participant.getId());
         return "redirect:/admin/participants";
     }
 }

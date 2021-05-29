@@ -16,6 +16,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Repository
 @Slf4j
@@ -28,7 +29,7 @@ public class JdbcDisciplineRepository implements DisciplineRepository {
         this.jdbc = jdbc;
     }
 
-    public Iterable<Discipline> findAll() {
+    public List<Discipline> findAll() {
         log.info("findAll");
         return jdbc.query(
                 "select * from Discipline",
@@ -55,6 +56,11 @@ public class JdbcDisciplineRepository implements DisciplineRepository {
         String sql = "select * from Discipline where id = (?)";
         Discipline d = jdbc.queryForObject(sql, this::mapRowToDiscipline, id);
         return d.getName();
+    }
+
+    public Discipline findById(Long id) {
+        String sql = "select * from Discipline where id = (?)";
+        return jdbc.queryForObject(sql, this::mapRowToDiscipline, id);
     }
 
     public Discipline save(Discipline discipline) {
@@ -89,5 +95,10 @@ public class JdbcDisciplineRepository implements DisciplineRepository {
         d.setCup(rs.getBoolean("isCup"));
 
         return d;
+    }
+
+    public void deleteById(Long id) {
+        String sql = "delete from Discipline where id = (?)";
+        jdbc.update(sql, id);
     }
 }

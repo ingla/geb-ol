@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="UTF-8">
+    <title>GEB OL - Ny Gren</title>
+    <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="header">
+    <div class="inner_header">
+        <a th:href="@{/}">
+            <img th:src="@{/images/olympic-rings-geb.png}">
+            <h2>
+                202<span style="letter-spacing:0; color: #AAAAAA;" >1</span>
+            </h2>
+        </a>
+    </div>
+</div>
+<main>
+    <h3>Slett gren</h3>
+    <span th:if="${allDisciplines.size() == 0}">Ingen resultater registrert</span>
+    <form th:if="${allDisciplines.size() > 0}"
+          method="post" th:object="${discipline}">
+        <select th:field="*{id}">
+            <option th:each="discipline : ${allDisciplines}"
+                    th:value="${discipline.id}"
+                    th:text="${discipline.name}">
+            </option>
+        </select>
+        <input type="submit" id="submitButton" value="Slett gren">
+    </form>
+    <a th:href="@{/admin/disciplines}">
+        <button type="button">Tilbake</button>
+    </a>
+</main>
+    <!-- Footer -->
+    <div class="footer">
+        <div class="inner_footer">
+            Laget av Ingvild og Sigurd
+        </div>
+    </div>
+
+</body>
+</html>

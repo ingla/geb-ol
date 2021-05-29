@@ -68,6 +68,6 @@ public class AddResultController {
         log.info("save-results");
         log.info(resultListCreation.getResults().toString());
         resultRepository.saveAll(resultListCreation.getResults());
-        return "home";
+        return "redirect:/admin/results";
     }
 }
