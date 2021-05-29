@@ -20,22 +20,21 @@
     </div>
 </div>
 <main>
-    <h3>Velg grenen som du vil legge til resultater for</h3>
-    <span th:if="${allDisciplines.size() == 0}">Fant ingen grener uten resultat fra før</span>
+    <h3>Slett alle resultater for en gren</h3>
+    <span th:if="${allDisciplines.size() == 0}">Ingen grener opprettet</span>
     <form th:if="${allDisciplines.size() > 0}"
-          method="post" th:object="${addResultUserInput}">
-        <select th:field="*{disciplineId}">
+          method="post" th:object="${discipline}">
+        <select th:field="*{id}">
             <option th:each="discipline : ${allDisciplines}"
                     th:value="${discipline.id}"
                     th:text="${discipline.name}">
             </option>
         </select>
-        <input type="number" th:field="*{participantCount}">
+        <input type="submit" id="submitButton" value="Slett resultater">
     </form>
     <a th:href="@{/admin/results}">
         <button type="button">Tilbake</button>
     </a>
-
 </main>
     <!-- Footer -->
     <div class="footer">

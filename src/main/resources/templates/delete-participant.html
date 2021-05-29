@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
     <meta charset="UTF-8">
-    <title>GEB OL - Ny Gren</title>
+    <title>GEB OL - Slett Gren</title>
     <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
@@ -20,22 +20,24 @@
     </div>
 </div>
 <main>
-    <h3>Velg grenen som du vil legge til resultater for</h3>
-    <span th:if="${allDisciplines.size() == 0}">Fant ingen grener uten resultat fra før</span>
-    <form th:if="${allDisciplines.size() > 0}"
-          method="post" th:object="${addResultUserInput}">
-        <select th:field="*{disciplineId}">
-            <option th:each="discipline : ${allDisciplines}"
-                    th:value="${discipline.id}"
-                    th:text="${discipline.name}">
+    <h3>Slett deltager</h3>
+    <span th:if="${allParticipants.size() == 0}">Ingen deltagere opprettet</span>
+    <form th:if="${allParticipants.size() > 0}"
+          method="post" th:object="${participant}">
+        <select th:field="*{id}">
+            <option th:each="participant : ${allParticipants}"
+                    th:value="${participant.id}"
+                    th:text="${participant.name}">
             </option>
         </select>
-        <input type="number" th:field="*{participantCount}">
+        <p th:if="${#fields.hasErrors('global')}">
+            <p th:each="err: ${#fields.errors('global')}" th:text="${err}" class="error" />
+        </p>
+        <input type="submit" id="submitButton" value="Slett deltager">
     </form>
-    <a th:href="@{/admin/results}">
+    <a th:href="@{/admin/participants}">
         <button type="button">Tilbake</button>
     </a>
-
 </main>
     <!-- Footer -->
     <div class="footer">

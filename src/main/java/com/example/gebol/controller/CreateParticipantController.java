@@ -49,6 +49,6 @@ public class CreateParticipantController {
         } else {
             participantRepository.save(participant);
         }
-        return "redirect:/add-participant";
+        return "redirect:/admin/participants";
     }
 }

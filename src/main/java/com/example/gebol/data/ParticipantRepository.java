@@ -10,4 +10,5 @@ public interface ParticipantRepository {
     Boolean hasParticipant(String name);
     Participant save(Participant participant);
     String getNameById(Long id);
+    void deleteById(Long id);
 }

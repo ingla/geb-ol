@@ -22,27 +22,26 @@
 <main>
     <div class="container">
         <div class="nav-button">
-            <a th:href="@{/disciplines}">
-                Grener
+            <a th:href="@{/add-participant}">
+                Ny deltager
             </a>
         </div>
         <div class="nav-button">
-            <a th:href="@{/admin}">
-                Admin
-            </a>
-        </div>
-
-        <div class="nav-button">
-            <a th:href="@{/standings}">
-                Sammenlagt
-            </a>
-        </div>
-        <div class="nav-button">
-            <a th:href="@{/participants}">
-                Deltagere
+            <a th:href="@{/delete-participant}">
+                Slett deltaker
             </a>
         </div>
     </div>
+
+    <!--View list of participants-->
+    <tr th:each="participant : ${participantList}">
+        <p>
+            <a th:href="@{/participants/{id}(id=${participant.id})}">
+                <span th:text="${participant.name}">
+                </span>
+            </a>
+        </p>
+    </tr>
 </main>
 <!-- Footer -->
 <div class="footer">

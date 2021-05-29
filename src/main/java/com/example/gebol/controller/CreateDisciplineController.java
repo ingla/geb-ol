@@ -44,6 +44,6 @@ public class CreateDisciplineController {
         }
 
         disciplineRepository.save(discipline);
-        return "redirect:/";
+        return "redirect:/admin/disciplines";
     }
 }

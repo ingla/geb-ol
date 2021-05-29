@@ -22,6 +22,12 @@
 <main>
     <h3>Legg til plassering</h3>
         <form action="#" method="post" th:object="${resultListCreation}" th:action="@{/save-results}">
+            <span th:if="${#fields.hasErrors('global')}">
+                <p th:each="err: ${#fields.errors('global')}"
+                   th:text="${err}"
+                   class = "error">
+                </p>
+            </span>
             <fieldset>
                 <table>
                     <thead>
@@ -49,6 +55,9 @@
                 <input type="submit" id="submitButton" th:value="Lagre">
             </fieldset>
         </form>
+    <a th:href="@{/init-add-result}">
+        <button type="button">Tilbake</button>
+    </a>
 </main>
 <!-- Footer -->
     <div class="footer">
