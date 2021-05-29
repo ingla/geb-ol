@@ -1,6 +1,7 @@
 package com.example.gebol.controller;
 
 import com.example.gebol.data.DisciplineRepository;
+import com.example.gebol.data.ResultRepository;
 import com.example.gebol.model.Discipline;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,15 @@ import java.util.List;
 public class DeleteDisciplineController {
 
     private DisciplineRepository disciplineRepository;
+    private ResultRepository resultRepository;
 
     @Autowired
-    public DeleteDisciplineController(DisciplineRepository disciplineRepository) {
+    public DeleteDisciplineController(
+            DisciplineRepository disciplineRepository,
+            ResultRepository resultRepository
+    ) {
         this.disciplineRepository = disciplineRepository;
+        this.resultRepository = resultRepository;
     }
 
     @GetMapping
@@ -46,6 +52,7 @@ public class DeleteDisciplineController {
         }
 
         disciplineRepository.deleteById(discipline.getId());
+        resultRepository.deleteByDisciplineId(discipline.getId());
         return "redirect:/admin/disciplines";
     }
 }

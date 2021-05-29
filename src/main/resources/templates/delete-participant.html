@@ -30,6 +30,9 @@
                     th:text="${participant.name}">
             </option>
         </select>
+        <p th:if="${#fields.hasErrors('global')}">
+            <p th:each="err: ${#fields.errors('global')}" th:text="${err}" class="error" />
+        </p>
         <input type="submit" id="submitButton" value="Slett deltager">
     </form>
     <a th:href="@{/admin/participants}">

@@ -71,6 +71,20 @@ public class JdbcResultRepository implements ResultRepository {
         jdbc.update(sql, id);
     }
 
+    @Override
+    public boolean hasParticipantId(Long id) {
+        String sql = "select participantId from Result where participantId = (?)";
+        List<Long> list = jdbc.queryForList(sql, Long.class, id);
+        return list.size() > 0;
+    }
+
+    @Override
+    public boolean hasDisciplineId(Long id) {
+        String sql = "select disciplineId from Result where disciplineId = (?)";
+        List<Long> list = jdbc.queryForList(sql, Long.class, id);
+        return list.size() > 0;
+    }
+
     private Result mapRowToResult(ResultSet rs, int rowNum) throws SQLException {
         Result r = new Result();
         r.setDisciplineId(rs.getLong("disciplineId"));

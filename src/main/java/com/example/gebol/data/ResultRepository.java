@@ -12,4 +12,6 @@ public interface ResultRepository {
     List<Result> findByParticipantId(Long participantId);
     List<Long> findAllDisciplineIds();
     void deleteByDisciplineId(Long id);
+    boolean hasParticipantId(Long id);
+    boolean hasDisciplineId(Long id);
 }
