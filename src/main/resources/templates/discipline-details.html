@@ -25,6 +25,19 @@
     
     <p th:text="${discipline.location}"> Location</p>
 
+
+    <h2 th:if="${disciplineResults.size() > 0}" th:text="Resultater"></h2>
+    <table>
+    <tr th:each="result, itemStat : ${disciplineResults}">
+        <td th:text="${result.place}"></td>
+        <td>
+            <a th:href="@{/participants/{id}(id=${result.participantId})}"
+               th:text="${result.participantName}">
+            </a>
+        </td>
+        <td th:text="${@pointCalculationService.getPointsForPlace(result.place)}"></td>
+    </tr>
+    </table>
 </main>
 <!-- Footer -->
 <div class="footer">

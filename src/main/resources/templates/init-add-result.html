@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
     <meta charset="UTF-8">
-    <title>GEB OL - Resultater</title>
+    <title>GEB OL - Ny Gren</title>
     <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
@@ -20,14 +20,17 @@
     </div>
 </div>
 <main>
-<h1>Sammenlagt</h1>
-    <table>
-        <tr th:each="result, itemStat : ${standingResults}">
-            <td th:text="${itemStat.index + 1}"></td>
-            <td th:text="${result.participantName}"></td>
-            <td th:text="${result.points}"></td>
-        </tr>
-    </table>
+    <h3>Velg grenen som du vil legge til resultater for</h3>
+    <form method="post" th:object="${addResultUserInput}">
+        <select th:field="*{disciplineId}">
+            <option th:each="discipline : ${allDisciplines}"
+                    th:value="${discipline.id}"
+                    th:text="${discipline.name}">
+            </option>
+        </select>
+        <input type="number" th:field="*{participantCount}">
+    </form>
+
 </main>
     <!-- Footer -->
     <div class="footer">

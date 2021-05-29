@@ -1,5 +1,6 @@
 package com.example.gebol.data;
 
+import com.example.gebol.model.Discipline;
 import com.example.gebol.model.Participant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,12 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import javax.servlet.http.Part;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Arrays;
+import java.util.List;
 
 @Repository
 @Slf4j
@@ -27,14 +30,14 @@ public class JdbcParticipantRepository implements ParticipantRepository {
         this.jdbc = jdbc;
     }
 
-    public Iterable<Participant> findAll() {
+    public List<Participant> findAll() {
         return jdbc.query(
 
                 "select * from Participant",
-                this::mapRowToDiscipline);
+                this::mapRowToParticipant);
     }
 
-    public Participant findOne(String id) {
+    public Participant findOne(Long id) {
         String sql = "select * from Participant where lower(id) = lower(?)";
         return jdbc.queryForObject(
                 sql,
@@ -65,6 +68,12 @@ public class JdbcParticipantRepository implements ParticipantRepository {
         }
     }
 
+    public String getNameById(Long id) {
+        String sql = "select * from Participant where id = (?)";
+        Participant p = jdbc.queryForObject(sql, this::mapRowToParticipant, id);
+        return p.getName();
+    }
+
     public Participant save(Participant participant) {
         PreparedStatementCreator creator =
                 new PreparedStatementCreatorFactory(
@@ -80,7 +89,7 @@ public class JdbcParticipantRepository implements ParticipantRepository {
         return participant;
     }
 
-    public Participant mapRowToDiscipline(ResultSet rs, int rowNum) throws SQLException {
+    public Participant mapRowToParticipant(ResultSet rs, int rowNum) throws SQLException {
         Participant p = new Participant();
         p.setId(rs.getLong("id"));
         p.setName(rs.getString("name"));
