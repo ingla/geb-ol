@@ -17,14 +17,20 @@
     text-align: center;
     padding: 0px;
     width: 150px;
-    margin: 15px;
+    margin: 0px;
     line-height: 50px;
+}
+.nav-button-admin{
+    width: 250px;
+
 }
 
 .error{
     color:#ff0000;
 }
-
+a{
+margin: 15px;
+}
 table{
     margin: auto;
 }

@@ -21,27 +21,30 @@
 </div>
 <main>
     <div class="container">
-        <div class="nav-button">
-            <a th:href="@{/disciplines}">
-                Grener
-            </a>
-        </div>
-        <div class="nav-button">
-            <a th:href="@{/admin}">
-                Admin
-            </a>
-        </div>
-
-        <div class="nav-button">
-            <a th:href="@{/standings}">
+        <a th:href="@{/standings}">
+            <div class="nav-button">
                 Sammenlagt
-            </a>
-        </div>
-        <div class="nav-button">
-            <a th:href="@{/participants}">
+            </div>
+        </a>
+
+        <a th:href="@{/disciplines}">
+            <div class="nav-button">
+                Grener
+            </div>
+        </a>
+
+        <a th:href="@{/participants}">
+            <div class="nav-button">
                 Deltagere
-            </a>
-        </div>
+            </div>
+        </a>
+
+        <a th:href="@{/admin}">
+            <div class="nav-button">
+                Administrer
+            </div>
+        </a>
+
     </div>
 </main>
 <!-- Footer -->
