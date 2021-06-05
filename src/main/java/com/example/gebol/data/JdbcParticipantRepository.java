@@ -77,12 +77,16 @@ public class JdbcParticipantRepository implements ParticipantRepository {
     public Participant save(Participant participant) {
         PreparedStatementCreator creator =
                 new PreparedStatementCreatorFactory(
-                        "insert into Participant (id, name) values (?, ?)",
-                        Types.VARCHAR, Types.VARCHAR
-                ).newPreparedStatementCreator(
-                        Arrays.asList(
-                                participant.getId(),
-                                participant.getName()));
+                        "insert into Participant (name) values (?)",
+                        Types.VARCHAR
+                ) {
+                    {
+                        setReturnGeneratedKeys(true);
+                        setGeneratedKeysColumnNames("id");
+                    }
+                }.newPreparedStatementCreator(
+                                Arrays.asList(
+                                        participant.getName()));
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbc.update(creator, keyHolder);
