@@ -98,8 +98,17 @@ td{
     vertical-align: center;
     height: 100%;
     font-size: 1.3vh;
+    float: right;
 }
-
+.admin_button{
+     padding: 0.3vw;
+     margin: 0 auto;
+     text-align: left;
+     vertical-align: center;
+     height: 100%;
+     font-size: 1.3vh;
+     float: left;
+}
 input{
     cursor: pointer;
     padding: 1vw;
