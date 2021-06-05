@@ -5,39 +5,6 @@
     border: 0;
     padding: 0;
 }
-.container{
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap:wrap;
-    width: 100%;
-}
-.nav-button{
-    font-variant-caps: small-caps;
-    border: solid 2px;
-    text-align: center;
-    padding: 0px;
-    width: 150px;
-    margin: 0px;
-    line-height: 50px;
-}
-.nav-button-admin{
-    width: 250px;
-
-}
-
-.error{
-    color:#ff0000;
-}
-a{
-margin: 15px;
-}
-table{
-    margin: auto;
-}
-td{
-    text-align: left;
-    padding: 0.5vw;
-}
 
 html{
     height: 100%;
@@ -53,10 +20,57 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+
 main{
     text-align: center;
     flex-grow:1;
 }
+
+.container{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap:wrap;
+    width: 100%;
+}
+
+.nav-button{
+    font-variant-caps: small-caps;
+    border: solid 2px;
+    text-align: center;
+    padding: 0px;
+    width: 150px;
+    margin: 0px;
+    line-height: 50px;
+}
+.nav-button-admin{
+    width: 250px;
+}
+
+.error{
+    color:#ff0000;
+}
+
+a{
+    text-decoration: none;
+}
+
+
+.textleft{
+    text-align:left;
+}
+
+table{
+    margin: auto;
+}
+
+tr{
+    height: 44px;
+}
+td{
+    vertical-align: middle;
+}
+
+
 .header{
     margin-bottom:0;
     margin-top:1vw;
@@ -64,15 +78,16 @@ main{
     margin-right:1vw;
     display: block;
 }
+
 .inner_header{
-    padding: 1vw;
+    padding: 5vh;
     display: table;
     margin: 0 auto;
     text-align: center;
     vertical-align: center;
     height: 100%;
-    letter-spacing: 1vw;
 }
+
 .footer{
     width: 100%;
 }
@@ -82,7 +97,7 @@ main{
     text-align: right;
     vertical-align: center;
     height: 100%;
-    font-size: 0.6vw;
+    font-size: 1.3vh;
 }
 
 input{
@@ -104,12 +119,14 @@ button{
    outline: none;
 }
 
-a{
-  text-decoration: none;
+.spacing-large {
+  letter-spacing: 1em;
+  text-align: center;
+  text-indent: 1em;
 }
 
-img{
-    width:15vw;
+.center{
+align: center;
 }
 
 
