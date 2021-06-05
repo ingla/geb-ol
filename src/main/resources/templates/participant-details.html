@@ -11,20 +11,65 @@
 <div class="header">
     <div class="inner_header">
         <a th:href="@{/}">
-            <img th:src="@{/images/olympic-rings-geb.png}">
-            <h2>
-                202<span style="letter-spacing:0; color: #AAAAAA;" >1</span>
+            <div class="center">
+            <img th:src="@{/images/olympic-rings-geb.png}" width="250">
+            </div>
+            <h2 class="spacing-large">
+                2021
             </h2>
+            <h3>5. - 7. AUGUST</h3>
         </a>
     </div>
 </div>
 <main>
     <h1 th:text="${participant.name}"> Name</h1>
-    <table>
+    <table th:if="${participantResults.size() > 0}">
+        <tr>
+            <th width = "60"></th>
+
+            <th class="textleft"> Gren</th>
+
+            <th width="60">Plass</th>
+
+            <th>Poeng</th>
+
+
+        </tr>
+        <tr>
+            <td></td>
+                <td class="textleft">
+                    <a th:href="@{/standings}"
+                       th:text="Sammenlagt">
+
+                    </a>
+                </td>
+            <td></td>
+            <td></td>
+        </tr>
         <tr th:each="result : ${participantResults}">
-            <td th:text="${result.disciplineName}"></td>
+            <td th:if="${result.place == 1}" >
+
+                <img th:src="@{/images/medalG.png}" width= "26" >
+
+            </td>
+            <td th:if="${result.place == 2}">
+                <img th:src="@{/images/medalS.png}" width= "25">
+            </td>
+            <td th:if="${result.place == 3}">
+                <img  th:src="@{/images/medalB.png}" width= "24">
+            </td>
+            <td th:if="${result.place > 3}">
+
+            </td>
+
+            <td class="textleft">
+                <a th:href="@{/disciplines/{name}(name=${result.disciplineName})}"
+                   th:text="${result.disciplineName}"></a>
+            </td>
             <td th:text="${result.place}"></td>
+
             <td th:text="${@pointCalculationService.getPointsForPlace(result.place)}"></td>
+
         </tr>
     </table>
 

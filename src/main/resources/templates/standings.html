@@ -12,20 +12,41 @@
 <div class="header">
     <div class="inner_header">
         <a th:href="@{/}">
-            <img th:src="@{/images/olympic-rings-geb.png}">
-            <h2>
-                202<span style="letter-spacing:0; color: #AAAAAA;" >1</span>
+            <div class="center">
+            <img th:src="@{/images/olympic-rings-geb.png}" width="250">
+            </div>
+            <h2 class="spacing-large">
+                2021
             </h2>
+            <h3>5. - 7. AUGUST</h3>
         </a>
     </div>
 </div>
 <main>
 <h1>Sammenlagt</h1>
     <table>
+        <tr>
+
+            <th> Plass</th>
+            <th width="20"></th>
+            <th class="textleft">Navn</th>
+            <th>Poeng</th>
+            <th></th>
+        </tr>
         <tr th:each="result, itemStat : ${standingResults}">
             <td th:text="${itemStat.index + 1}"></td>
-            <td th:text="${result.participantName}"></td>
+            <td></td>
+
+            <td class="textleft" >
+                <a th:href="@{/participants/{id}(id=${result.participantId})}"
+                   th:text="${result.participantName}">
+            </td>
             <td th:text="${result.points}"></td>
+
+            <td>
+
+            </td>
+
         </tr>
     </table>
 </main>

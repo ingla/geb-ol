@@ -11,26 +11,54 @@
 <div class="header">
     <div class="inner_header">
         <a th:href="@{/}">
-            <img th:src="@{/images/olympic-rings-geb.png}">
-            <h2>
-                202<span style="letter-spacing:0; color: #AAAAAA;" >1</span>
+            <div class="center">
+            <img th:src="@{/images/olympic-rings-geb.png}" width = "250">
+            </div>
+            <h2 class="spacing-large">
+                2021
             </h2>
+            <h3>5. - 7. AUGUST</h3>
         </a>
     </div>
 </div>
 <main>
     <h1 th:text="${discipline.name}"> Name</h1>
-    <p th:text="${#strings.capitalize(weekday) + ' ' + #temporals.day(discipline.date) + '/' + #temporals.month(discipline.date)}">Day</p>
-     <p th:text ="${'Kl ' + #temporals.format(discipline.date, 'HH:mm')} "> Time</p>
-    
-    <p th:text="${discipline.location}"> Location</p>
+    <div class="container">
+        <div>
+        <h4 th:text="${ #strings.capitalize(weekday) + ' ' + #temporals.day(discipline.date) + '/' + #temporals.month(discipline.date)+ '   ' + #temporals.format(discipline.date, 'HH:mm')}">Day</h4>
+        <h4 style="margin-bottom:1cm;" th:text="${discipline.location}"> Location</h4>
+        </div>
+    </div>
 
-
-    <h2 th:if="${disciplineResults.size() > 0}" th:text="Resultater"></h2>
-    <table>
+    <h1 th:if="${disciplineResults.size() > 0}" th:text="Resultater"></h1>
+    <table th:if="${disciplineResults.size() > 0}">
+        <tr>
+            <th></th>
+            <th>Plass</th>
+            <th width = "20"></th>
+            <th class="textleft">Navn</th>
+            <th>Poeng</th>
+        </tr>
     <tr th:each="result, itemStat : ${disciplineResults}">
-        <td th:text="${result.place}"></td>
-        <td>
+        <td th:if="${result.place == 1}" >
+
+            <img th:src="@{/images/medalG.png}" width= "26" >
+
+        </td>
+        <td th:if="${result.place == 2}">
+            <img th:src="@{/images/medalS.png}" width= "25">
+        </td>
+        <td th:if="${result.place == 3}">
+            <img  th:src="@{/images/medalB.png}" width= "24">
+        </td>
+        <td th:if="${result.place > 3}">
+
+        </td>
+        <td th:text="${result.place}">
+
+        </td>
+        <td></td>
+        <td class="textleft">
             <a th:href="@{/participants/{id}(id=${result.participantId})}"
                th:text="${result.participantName}">
             </a>
