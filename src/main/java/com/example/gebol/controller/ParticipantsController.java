@@ -6,6 +6,9 @@ import com.example.gebol.data.ResultRepository;
 import com.example.gebol.model.Participant;
 import com.example.gebol.model.ParticipantResult;
 import com.example.gebol.model.Result;
+import com.example.gebol.model.StandingResult;
+import com.example.gebol.service.PointCalculationService;
+import com.example.gebol.service.StandingResultsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,15 +27,21 @@ public class ParticipantsController {
     private final ParticipantRepository participantRepository;
     private final ResultRepository resultRepository;
     private final DisciplineRepository disciplineRepository;
+    private final PointCalculationService pointCalculationService;
+    private final StandingResultsService standingResultsService;
 
     public ParticipantsController(
             ParticipantRepository participantRepository,
             ResultRepository resultRepository,
-            DisciplineRepository disciplineRepository
+            DisciplineRepository disciplineRepository,
+            PointCalculationService pointCalculationService,
+            StandingResultsService standingResultsService
     ) {
         this.participantRepository = participantRepository;
         this.resultRepository = resultRepository;
         this.disciplineRepository = disciplineRepository;
+        this.pointCalculationService = pointCalculationService;
+        this.standingResultsService = standingResultsService;
     }
 
     @GetMapping
@@ -59,6 +68,16 @@ public class ParticipantsController {
                                 res.getPlace()))
                 .collect(Collectors.toList());
         model.addAttribute("participantResults", myResults);
+
+        // Generate place and points for overall standings
+        List<StandingResult> standingResults = standingResultsService.getStandingResults();
+
+        for (StandingResult s : standingResults) {
+            if (s.getParticipantId() == p.getId()) {
+                model.addAttribute("standingResult", s);
+            }
+        }
+
 
         return "participant-details";
     }

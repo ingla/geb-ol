@@ -43,8 +43,9 @@
 
                     </a>
                 </td>
-            <td></td>
-            <td></td>
+            <td th:text="${standingResult.place}">Place</td>
+            <td th:text="${standingResult.points}">Points</td>
+
         </tr>
         <tr th:each="result : ${participantResults}">
             <td th:if="${result.place == 1}" >
