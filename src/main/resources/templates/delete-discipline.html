@@ -26,6 +26,7 @@
     <h3>Slett gren</h3>
     <span th:if="${allDisciplines.size() == 0}">Ingen resultater opprettet</span>
     <form th:if="${allDisciplines.size() > 0}"
+          th:action="@{/delete-discipline}"
           method="post" th:object="${discipline}">
         <select th:field="*{id}">
             <option th:each="discipline : ${allDisciplines}"

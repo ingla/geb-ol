@@ -24,7 +24,7 @@
 </div>
 <main>
     <h3>NY DELTAGER</h3>
-    <form method="post" th:object="${participant}">
+    <form method="post" th:action="@{/add-participant}" th:object="${participant}">
         <table>
             <tr>
                 <td>
