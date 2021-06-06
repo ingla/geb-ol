@@ -26,5 +26,8 @@ public class StandingResult {
     private Long participantId;
 
     @NotNull
+    private int place;
+
+    @NotNull
     private int points;
 }
