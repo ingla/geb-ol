@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/admin", "/admin/**", "/delete*", "/add-*").hasRole("ADMIN")
+                .antMatchers("/admin", "/admin/**", "/delete*", "/add-*", "/init-add*").hasRole("ADMIN")
                 .antMatchers("/", "/**").permitAll()
                 .anyRequest().authenticated()
 
@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("admin")
-                .password("{noop}123")
+                .password("{noop}wingspan")
                 .roles("ADMIN");
     }
 }
