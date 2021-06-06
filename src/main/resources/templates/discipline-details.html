@@ -70,7 +70,8 @@
 
     <h1 th:if="${discipline.isCup}" th:text="Tabell"></h1>
 
-    <script  th:if="${discipline.isCup}" th:inline="javascript">
+    <script th:if="${discipline.isCup}"
+            th:inline="javascript">
       function setup() {
           createCanvas(790, 790);
           textSize(width / 3);
