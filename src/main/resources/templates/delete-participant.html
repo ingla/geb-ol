@@ -26,6 +26,7 @@
     <h3>Slett deltager</h3>
     <span th:if="${allParticipants.size() == 0}">Ingen deltagere opprettet</span>
     <form th:if="${allParticipants.size() > 0}"
+          th:action="@{/delete-participant}"
           method="post" th:object="${participant}">
         <select th:field="*{id}">
             <option th:each="participant : ${allParticipants}"
