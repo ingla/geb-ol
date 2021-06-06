@@ -20,38 +20,27 @@
             </h2>
             <h3>5. - 7. AUGUST</h3>
         </a>
+
     </div>
 </div>
 <main>
-    <div class="container">
-        <a th:href="@{/admin/disciplines}">
-            <div class="nav-button nav-button-admin">
-                Administrer grener
-            </div>
-        </a>
-
-        <a th:href="@{/admin/participants}">
-            <div class="nav-button nav-button-admin">
-                Administrer deltagere
-            </div>
-        </a>
-
-        <a th:href="@{/admin/results}">
-            <div class="nav-button nav-button-admin">
-                Administrer resultater
-            </div>
-        </a>
+    <h1>Login</h1>
+    <div th:if="${error}">
+        Klarte ikke å logge deg inn. Sjekk brukernavn og passord
     </div>
 
-    <div class="container">
-        <form method="post" th:action="@{/logout}">
-            <input type="submit" value="Logout"/>
-        </form>
-    </div>
+    <form method="POST" th:action="@{/login}" id="loginForm">
+        <label for="username">Brukernavn</label>
+        <input type="text" name="username" id="username">
+        <label for="password">Passord:</label>
+        <input type="password" name="password" id="password">
+
+        <input type="submit" value="Login"/>
+    </form>
 </main>
 <!-- Footer -->
 <div class="footer">
-    <div class="inner_footer" title="...og Lars hjalp til">
+    <div class="inner_footer">
         Laget av Ingvild og Sigurd
     </div>
 </div>

@@ -1,0 +1,24 @@
+logging:
+  level:
+    root: info
+
+spring:
+  datasource:
+    platform: h2
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    platform: mysql
+    url: jdbc:mysql://aar2ocip2i3brk.ctxfvlhgrfdl.eu-west-1.rds.amazonaws.com:3306/ebdb
+    username: gebol
+    password: gebolgebol
+    initialization-mode: never # Switch to always for first deployment
+
+server:
+  port: 5000

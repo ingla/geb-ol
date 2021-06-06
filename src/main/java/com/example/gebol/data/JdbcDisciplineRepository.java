@@ -69,7 +69,12 @@ public class JdbcDisciplineRepository implements DisciplineRepository {
                 new PreparedStatementCreatorFactory(
                         "insert into Discipline (name, location, date, isCup) values (?, ?, ?, ?)",
                         Types.VARCHAR, Types.VARCHAR, Types.TIMESTAMP, Types.BOOLEAN
-                ).newPreparedStatementCreator(
+                ) {
+                    {
+                        setReturnGeneratedKeys(true);
+                        setGeneratedKeysColumnNames("id");
+                    }
+                }.newPreparedStatementCreator(
                         Arrays.asList(
                                 discipline.getName(),
                                 discipline.getLocation(),
