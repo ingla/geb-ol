@@ -6,6 +6,7 @@
     <title th:text="${'GEB OL - ' + discipline.name}"> </title>
     <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <script th:src="@{/js/p5.min.js}"></script>
 </head>
 <body>
 <div class="header">
@@ -66,6 +67,75 @@
         <td th:text="${@pointCalculationService.getPointsForPlace(result.place)}"></td>
     </tr>
     </table>
+
+    <h1 th:if="${discipline.isCup}" th:text="Tabell"></h1>
+
+    <script th:inline="javascript">
+      function setup() {
+          createCanvas(790, 790);
+          textSize(width / 3);
+          textAlign(CENTER, CENTER);
+          strokeCap(SQUARE);
+          noLoop();
+      }
+
+      function drawSlot(level, place, radius) {
+          const gap = PI/500;
+          const slots = level == 0 ? 4 : pow(2, level + 1);
+          const weight = (radius(level) - radius(level - 1))/2 - level;
+          const arcStart = TWO_PI/slots * place;
+          const arcEnd = arcStart + TWO_PI/slots;
+          const arcDiameter = radius(level) - weight;
+
+          stroke(196 - 12 * ((place + level) % 2));
+          strokeWeight(weight);
+
+          arc(0, 0, arcDiameter, arcDiameter, arcStart + gap, arcEnd - gap);
+      }
+
+      function drawSlots(contenders) {
+          push();
+          const n = contenders.length;
+          const levels = ceil(log(n)/log(2));
+
+          const radius = level => {
+              if (level < 0) {
+                  return 0;
+              }
+
+              r0 = width/sqrt(pow(2, levels - 1));
+              return sqrt(pow(2, level)) * r0;
+          };
+
+          for (i = 0; i < levels; i++) {
+              for (j = 0; j < pow(2, i + 1); j++) {
+                  drawSlot(i, j, radius);
+              }
+          }
+
+          drawSlot(0, 2, radius);
+          drawSlot(0, 3, radius);
+
+          pop();
+      }
+
+      function draw() {
+          translate(width/2, height/2);
+          rotate(-PI/2);
+
+          noFill();
+
+          // Test array. Should be fetched from server.
+          const contenders = ['sigurd', 'ingvild', 'lars'] .concat(Array(8).fill('oki'));
+          drawSlots(contenders);
+
+          // Getting data through thymeleaf can be done with an insane amount
+          // of brackets and a dollar-sign, like so:
+          //   fill(255, 255, 255);
+          //   text([[${discipline.name}]], 0, 0);
+      }
+    </script>
+
 </main>
 <!-- Footer -->
 <div class="footer">
