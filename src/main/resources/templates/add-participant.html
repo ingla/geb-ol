@@ -29,7 +29,7 @@
             <tr>
                 <td>
                     <h6>Navn</h6>
-                    <input type="text" th:field="*{name}" placeholder="Sigurd" required>
+                    <input type="text" autofocus th:field="*{name}" placeholder="Sigurd" required>
                 </td>
             </tr>
             <tr th:if="${#fields.hasErrors('global')}">

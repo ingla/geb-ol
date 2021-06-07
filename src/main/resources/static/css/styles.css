@@ -35,11 +35,11 @@ main{
 
 .nav-button{
     font-variant-caps: small-caps;
-    border: solid 2px;
+    border: outset 2px;
     text-align: center;
     padding: 0px;
     width: 150px;
-    margin: 0px;
+    margin: 15px;
     line-height: 50px;
 }
 .nav-button-admin{
@@ -111,19 +111,19 @@ td{
 }
 input{
     cursor: pointer;
-    padding: 1vw;
-    width: 16vw;
+    padding: 10px;
+    width: 160px;
     color: #000000;
 }
 
 button{
    cursor: pointer;
-   border-radius: 1vw;
-   border: 0.1vw solid;
-   padding: 1vw;
+   border-radius: 10px;
+   border: 2px solid;
+   padding: 10px;
    color: #BBBBBB;
    background-color: transparent;
-   font-size: 1vw;
+   font-size: 10px;
    border-color: #BBBBBB;
    outline: none;
 }
