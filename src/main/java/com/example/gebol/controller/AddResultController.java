@@ -69,6 +69,8 @@ public class AddResultController {
         }
 
         model.addAttribute("resultListCreation", resultList);
+        Discipline d = disciplineRepository.findById(addResultUserInput.getDisciplineId());
+        model.addAttribute("discipline", d);
         return "add-results-for-discipline";
     }
 

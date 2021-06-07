@@ -39,7 +39,11 @@
             </a>
 
     </div>
-
+    <p>
+        <a th:href="@{/admin}">
+            <button type="button">Tilbake</button>
+        </a>
+    </p>
     <!--View list of results-->
     <h3>Grener med registrert resultat</h3>
     <tr th:each="discipline : ${disciplineList}">

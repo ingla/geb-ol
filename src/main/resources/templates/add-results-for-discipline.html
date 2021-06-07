@@ -23,6 +23,7 @@
     </div>
 </div>
 <main>
+    <h2 th:text="${discipline.name}"></h2>
     <h3>Legg til plassering</h3>
         <form action="#" method="post" th:object="${resultListCreation}" th:action="@{/save-results}">
             <span th:if="${#fields.hasErrors('global')}">

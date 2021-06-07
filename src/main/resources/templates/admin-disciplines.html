@@ -37,7 +37,14 @@
         </a>
     </div>
 
+    <p>
+        <a th:href="@{/admin}">
+            <button type="button">Tilbake</button>
+        </a>
+    </p>
+
     <!--View list of disciplines-->
+
     <tr th:each="discipline : ${disciplineList}">
         <p>
             <a th:href="@{/disciplines/{name}(name=${discipline.name})}">

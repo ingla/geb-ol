@@ -40,6 +40,11 @@
 
     </div>
 
+    <p>
+        <a th:href="@{/admin}">
+            <button type="button">Tilbake</button>
+        </a>
+    </p>
     <!--View list of participants-->
     <tr th:each="participant : ${participantList}">
         <p>
@@ -49,6 +54,7 @@
             </a>
         </p>
     </tr>
+
 </main>
 <!-- Footer -->
 <div class="footer">
