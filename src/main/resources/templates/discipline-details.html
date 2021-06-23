@@ -72,69 +72,114 @@
 
     <script th:if="${discipline.isCup}"
             th:inline="javascript">
-      function setup() {
-          createCanvas(790, 790);
-          textSize(width / 3);
-          textAlign(CENTER, CENTER);
-          strokeCap(SQUARE);
-          noLoop();
-      }
+        function setup() {
+            createCanvas(790, 790);
+            textSize(width / 3);
+            textAlign(CENTER, CENTER);
+            strokeCap(SQUARE);
+            noLoop();
+        }
 
-      function drawSlot(level, place, radius) {
-          const gap = PI/500;
-          const slots = level == 0 ? 4 : pow(2, level + 1);
-          const weight = (radius(level) - radius(level - 1))/2 - level;
-          const arcStart = TWO_PI/slots * place;
-          const arcEnd = arcStart + TWO_PI/slots;
-          const arcDiameter = radius(level) - weight;
+        function drawSlot(level, place, radius) {
+            const gap = PI/500;
+            const slots = level == 0 ? 4 : pow(2, level + 1);
+            const weight = (radius(level) - radius(level - 1))/2 - level;
+            const arcStart = TWO_PI/slots * place;
+            const arcEnd = arcStart + TWO_PI/slots;
+            const arcDiameter = radius(level) - weight;
 
-          stroke(196 - 12 * ((place + level) % 2));
-          strokeWeight(weight);
+            stroke(196 - 12 * ((place + level) % 2));
+            strokeWeight(weight);
 
-          arc(0, 0, arcDiameter, arcDiameter, arcStart + gap, arcEnd - gap);
-      }
+            arc(0, 0, arcDiameter, arcDiameter, arcStart + gap, arcEnd - gap);
+        }
 
-      function drawSlots(contenders) {
-          push();
-          const n = contenders.length;
-          const levels = ceil(log(n)/log(2));
+        function drawSlots(layer, radius) {
+            push();
 
-          const radius = level => {
-              if (level < 0) {
-                  return 0;
-              }
+            for (let i = 0; i < layer; i++) {
+                for (let j = 0; j < pow(2, i + 1); j++) {
+                    drawSlot(i, j, radius);
+                }
+            }
 
-              r0 = width/sqrt(pow(2, levels - 1));
-              return sqrt(pow(2, level)) * r0;
-          };
+            drawSlot(0, 2, radius);
+            drawSlot(0, 3, radius);
 
-          for (i = 0; i < levels; i++) {
-              for (j = 0; j < pow(2, i + 1); j++) {
-                  drawSlot(i, j, radius);
-              }
-          }
+            pop();
+        }
+        function drawBrackets(n) {
+            push();
+            const layer = floor(log(n)/log(2));
+            const inner_spots = pow(2,layer);
 
-          drawSlot(0, 2, radius);
-          drawSlot(0, 3, radius);
+            const radius = level => {
+                if (level < 0) {
+                    return 0;
+                }
+                r0 = width/sqrt(pow(2, layer));
+                return sqrt(pow(2, level)) * r0;
+            };
 
-          pop();
-      }
+            drawSlots(layer, radius);
 
-      function draw() {
-          translate(width/2, height/2);
-          rotate(-PI/2);
+            for (let i = 0; i < (n-inner_spots); i++) {    //n-spots gives the number of matches in the outer layer
+                const matchPlace = table(layer, i); //best slot in the i'th best match in the outer layer
+                drawSlot(layer, matchPlace * 2, radius);
+                drawSlot(layer, opponent(matchPlace * 2), radius);
+            }
+            pop();
+        }
 
-          noFill();
+        function table(l,p) {
+            if (l == 0) {
+                return 0;
+            }
+            const half = pow(2, l-1);
+            if (p >= half) {
+                return opponent(table(l,p-half));
+            }
+            return nextOuterSlot(l, table(l-1, p));
+        }
 
-          // Test array. Should be fetched from server.
-          const contenders = ['sigurd', 'ingvild', 'lars'] .concat(Array(8).fill('oki'));
-          drawSlots(contenders);
+        function opponent(n) {
+            return (n % 2 == 0) ? n + 1 : n - 1;
+        }
 
-          // Getting data through thymeleaf can be done with an insane amount
-          // of brackets and a dollar-sign, like so:
-          //   fill(255, 255, 255);
-          //   text([[${discipline.name}]], 0, 0);
-      }
+        function nextOuterSlot(l, p) {
+            let blacks = 0;
+            for (let i = 0; i < (l+1); i++) {
+                if (((l-i) + floor(p/pow(2, i))) % 2 == 0) {
+                    blacks = blacks + 1;
+                }
+            }
+            if (blacks * 2 < l + 1) {
+                return 2 * p + ((l + 1) % 2);
+            }
+            if (blacks * 2 > l + 1) {
+                return 2 * p + (l % 2);
+            }
+            return 2 * p + ((l + p + 1) % 2);
+        }
+
+        function draw() {
+            translate(width/2, height/2);
+            rotate(-PI/2);
+
+            noFill();
+
+            // Test array. Should be fetched from server.
+            //const contenders = ['sigurd', 'ingvild', 'lars'] .concat(Array(15).fill('oki'));
+            const contenders = [[${disciplineResults}]];
+            const n = contenders.length;
+
+            drawBrackets(n);
+            //drawSlots(contenders);
+            // Getting data through thymeleaf can be done with an insane amount
+            // of brackets and a dollar-sign, like so:
+            // fill(255, 255, 255);
+            // text([[${discipline.name}]], 0, 0);
+        }
     </script>
 
 </main>
