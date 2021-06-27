@@ -36,6 +36,13 @@ public class JdbcDisciplineRepository implements DisciplineRepository {
                 this::mapRowToDiscipline);
     }
 
+    public List<Discipline> findAllSortedByDate() {
+        log.info("findAll");
+        return jdbc.query(
+                "select * from Discipline order by date",
+                this::mapRowToDiscipline);
+    }
+
     public Discipline findOne(String name) {
         log.info("findOne");
 

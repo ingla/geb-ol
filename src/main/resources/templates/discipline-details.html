@@ -23,7 +23,30 @@
     </div>
 </div>
 <main>
+    <h1>
+    <span th:if="${discipline.name == 'Dart'}"> &#127919</span>
+    <span th:if="${discipline.name == 'Bowling'}"> &#127923</span>
+    <span th:if="${discipline.name == 'Idealtid'}"> &#9201</span>
+    <span th:if="${discipline.name == 'Basket'}"> &#127936</span>
+    <span th:if="${discipline.name == 'Tennis'}"> &#127934</span>
+    <span th:if="${discipline.name == 'Bordtennis'}"> &#127955</span>
+    <span th:if="${discipline.name == 'Badminton'}"> &#127992</span>
+    <span th:if="${discipline.name == 'Tverra'}"> &#129349</span>
+    <span th:if="${discipline.name == 'Frisbeegolf'}"> &#129359</span>
+
+    <span th:if="${discipline.name == 'Beerpong'}">
+         <img th:src="@{/images/beerpong.png}" width = "40">
+        </span>
+
+    <span th:if="${discipline.name == 'Luftgevær'}">
+        <img th:src="@{/images/target.png}" width = "40">
+    </span>
+    <span th:if="${discipline.name == 'Petanque'}">
+        <img th:src="@{/images/petanque.png}" width = "40">
+    </span>
+    </h1>
     <h1 th:text="${discipline.name}"> Name</h1>
+    <br>
     <div class="container">
         <div>
         <h4 th:text="${ #strings.capitalize(weekday) + ' ' + #temporals.day(discipline.date) + '/' + #temporals.month(discipline.date)+ '   ' + #temporals.format(discipline.date, 'HH:mm')}">Day</h4>
@@ -34,7 +57,7 @@
     <h1 th:if="${disciplineResults.size() > 0}" th:text="Resultater"></h1>
     <table th:if="${disciplineResults.size() > 0}">
         <tr>
-            <th></th>
+
             <th>Plass</th>
             <th width = "20"></th>
             <th class="textleft">Navn</th>
@@ -42,21 +65,23 @@
         </tr>
     <tr th:each="result, itemStat : ${disciplineResults}">
         <td th:if="${result.place == 1}" >
-
-            <img th:src="@{/images/medalG.png}" width= "26" >
+            <h2><span>&#129351</span></h2>
+<!--            <img th:src="@{/images/medalG.png}" width= "26" >-->
 
         </td>
         <td th:if="${result.place == 2}">
-            <img th:src="@{/images/medalS.png}" width= "25">
+            <h2><span>&#129352</span></h2>
+<!--            <img th:src="@{/images/medalS.png}" width= "25">-->
         </td>
         <td th:if="${result.place == 3}">
-            <img  th:src="@{/images/medalB.png}" width= "24">
+            <h2><span>&#129353</span></h2>
+<!--            <img  th:src="@{/images/medalB.png}" width= "24">-->
         </td>
         <td th:if="${result.place > 3}">
 
-        </td>
-        <td th:text="${result.place}">
 
+        <span th:text="${result.place}">
+    </span>
         </td>
         <td></td>
         <td class="textleft">
@@ -67,13 +92,14 @@
         <td th:text="${@pointCalculationService.getPointsForPlace(result.place)}"></td>
     </tr>
     </table>
-
+    <br>
     <h1 th:if="${discipline.isCup}" th:text="Tabell"></h1>
-
+    <br>
     <script th:if="${discipline.isCup}"
             th:inline="javascript">
+
         function setup() {
-            createCanvas(790, 790);
+            createCanvas(320, 320);
             textSize(width / 3);
             textAlign(CENTER, CENTER);
             strokeCap(SQUARE);

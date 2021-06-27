@@ -7,7 +7,9 @@ import com.example.gebol.model.Discipline;
 import com.example.gebol.model.DisciplineResult;
 import com.example.gebol.model.Participant;
 import com.example.gebol.model.Result;
+import com.gargoylesoftware.htmlunit.html.HtmlDateTimeLocalInput;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -44,11 +44,29 @@ public class DisciplinesController {
     }
 
     @GetMapping
-    public String getDisciplineList(Model model) {
-        log.info("getDisciplineList");
-        Iterable<Discipline> list = disciplineRepository.findAll();
-        System.out.println(list);
-        model.addAttribute("disciplineList", list);
+    public String getProgram(Model model) {
+        log.info("getProgram");
+        List<Discipline> list = disciplineRepository.findAllSortedByDate();
+        HashMap<LocalDateTime, List<Discipline>> program = new HashMap<LocalDateTime, List<Discipline>>();
+        TreeMap<LocalDateTime, String> weekdays = new TreeMap<LocalDateTime, String>();
+        String dow;
+        for (Discipline d : list) {
+            List<Discipline> l1;
+            dow = d.getDate().getDayOfWeek().getDisplayName(TextStyle.FULL, new Locale("no"));
+            LocalDateTime key = d.getDate().truncatedTo(ChronoUnit.DAYS);
+            weekdays.put(key, dow);
+
+            if (program.containsKey(key)) {
+                l1 = program.get(key);
+            }
+            else{
+                l1 = new ArrayList<>();
+            }
+            l1.add(d);
+            program.put(key, l1);
+        }
+        model.addAttribute("program", program);
+        model.addAttribute( "weekdays", weekdays);
         return "disciplines";
     }
 

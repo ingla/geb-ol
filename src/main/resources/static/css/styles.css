@@ -35,7 +35,7 @@ main{
 
 .nav-button{
     font-variant-caps: small-caps;
-    border: outset 2px;
+    border: solid 1px;
     text-align: center;
     padding: 0px;
     width: 200px;
@@ -59,8 +59,35 @@ a{
     text-align:left;
 }
 
+.textright{
+    text-align:right;
+}
+
 table{
     margin: auto;
+    border-collapse: collapse;
+}
+
+.firstLine{
+    border-bottom: 2px solid #BBBBBB;
+}
+.fixed
+{
+  table-layout:fixed;
+  width:100px;
+  overflow:hidden;
+}
+.fixed.small
+{
+  table-layout:fixed;
+  width:50px;
+  overflow:hidden;
+}
+.fixed.large
+{
+  table-layout:fixed;
+  width:150px;
+  overflow:hidden;
 }
 
 tr{
@@ -69,7 +96,6 @@ tr{
 td{
     vertical-align: middle;
 }
-
 
 .header{
     margin-bottom:0;
@@ -137,5 +163,4 @@ button{
 .center{
 align: center;
 }
-
 
