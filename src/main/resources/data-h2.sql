@@ -1,6 +1,6 @@
 insert into Discipline (id, name, location, date, isCup)
 values  (1, 'Frisbeegolf', 'ELVIS', '2021-08-05 16:30:00+01:00', false),
-        (2, 'Bowling', 'Bowling 1 Elverum', '2021-08-05 18:00:00+01:00', false),
+        (2, 'Bowling', 'Bowling1 Elverum', '2021-08-05 18:00:00+01:00', false),
         (3, 'Petanque', 'EUS', '2021-08-06 13:00:00+01:00', true),
         (4, 'Tennis', 'Terningen Arena', '2021-08-05 13:00:00+01:00', true),
         (7, 'Idealtid', 'EUS', '2021-08-06 13:00:00+01:00', false),

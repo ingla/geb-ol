@@ -26,56 +26,58 @@
             <h1>
                 Program
             </h1>
-            <table style="margin-left:25px; margin-right:25px">
-                <tr>
-                    <td>
-                        <div class="container">
-                            <table th:each="programDate : ${weekdays}">
-                                <tr>
-                                    <td colspan="4" >
-                                        <b style = "font-variant-caps: small-caps" th:text="${#strings.capitalize(programDate.value) + ' ' + #temporals.day(programDate.key) + '/' + #temporals.month(programDate.key)}">
-                                        </b>
-                                    </td>
-                                </tr>
-                                <tr th:each="discipline : ${program.get(programDate.key)}">
-                                    <td class="fixed small" >
-                                        <u th:text="${#temporals.format(discipline.date, 'HH:mm')}">
-                                        </u>
-                                    </td>
-                                    <td class ="fixed small">
-                                        <span th:if="${discipline.name == 'Dart'}"> &#127919</span>
-                                        <span th:if="${discipline.name == 'Bowling'}"> &#127923</span>
-                                        <span th:if="${discipline.name == 'Idealtid'}"> &#9201</span>
-                                        <span th:if="${discipline.name == 'Basket'}"> &#127936</span>
-                                        <span th:if="${discipline.name == 'Tennis'}"> &#127934</span>
-                                        <span th:if="${discipline.name == 'Bordtennis'}"> &#127955</span>
-                                        <span th:if="${discipline.name == 'Badminton'}"> &#127992</span>
-                                        <span th:if="${discipline.name == 'Tverra'}"> &#129349</span>
-                                        <span th:if="${discipline.name == 'Frisbeegolf'}"> &#129359</span>
-                                        <span th:if="${discipline.name == 'Beerpong'}">
-                                            <img th:src="@{/images/beerpong.png}" width = "20">
-                                        </span>
-                                        <span th:if="${discipline.name == 'Luftgevær'}">
-                                            <img th:src="@{/images/target.png}" width = "20">
-                                        </span>
-                                        <span th:if="${discipline.name == 'Petanque'}">
-                                            <img th:src="@{/images/petanque.png}" width = "20">
-                                        </span>
-                                    </td>
-                                    <td class="fixed" style="text-align:left">
-                                        <a th:href="@{/disciplines/{name}(name=${discipline.name})}">
-                                            <b th:text="${discipline.name}">
+            <div class="container">
+                <table style="margin-left:20px; margin-right:20px">
+                    <tr>
+                        <td>
+                            <div class="container">
+                                <table th:each="programDate : ${weekdays}">
+                                    <tr>
+                                        <td colspan="4" >
+                                            <b style = "font-variant-caps: small-caps" th:text="${#strings.capitalize(programDate.value) + ' ' + #temporals.day(programDate.key) + '/' + #temporals.month(programDate.key)}">
                                             </b>
-                                        </a>
-                                    </td>
-                                    <td class="fixed large" style="text-align:left" th:text="${discipline.location}">
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+                                        </td>
+                                    </tr>
+                                    <tr th:each="discipline : ${program.get(programDate.key)}">
+                                        <td class="fixed small" >
+                                            <u th:text="${#temporals.format(discipline.date, 'HH:mm')}">
+                                            </u>
+                                        </td>
+                                        <td class ="fixed small">
+                                            <span th:if="${discipline.name == 'Dart'}"> &#127919</span>
+                                            <span th:if="${discipline.name == 'Bowling'}"> &#127923</span>
+                                            <span th:if="${discipline.name == 'Idealtid'}"> &#9201</span>
+                                            <span th:if="${discipline.name == 'Basket'}"> &#127936</span>
+                                            <span th:if="${discipline.name == 'Tennis'}"> &#127934</span>
+                                            <span th:if="${discipline.name == 'Bordtennis'}"> &#127955</span>
+                                            <span th:if="${discipline.name == 'Badminton'}"> &#127992</span>
+                                            <span th:if="${discipline.name == 'Tverra'}"> &#129349</span>
+                                            <span th:if="${discipline.name == 'Frisbeegolf'}"> &#129359</span>
+                                            <span th:if="${discipline.name == 'Beerpong'}">
+                                                <img th:src="@{/images/beerpong.png}" width = "20">
+                                            </span>
+                                            <span th:if="${discipline.name == 'Luftgevær'}">
+                                                <img th:src="@{/images/target.png}" width = "20">
+                                            </span>
+                                            <span th:if="${discipline.name == 'Petanque'}">
+                                                <img th:src="@{/images/petanque.png}" width = "20">
+                                            </span>
+                                        </td>
+                                        <td class="fixed" style="text-align:left">
+                                            <a th:href="@{/disciplines/{name}(name=${discipline.name})}">
+                                                <b th:text="${discipline.name}">
+                                                </b>
+                                            </a>
+                                        </td>
+                                        <td class="fixed large" th:text="${discipline.location}">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </main>
         <!-- Footer -->
         <div class="footer">

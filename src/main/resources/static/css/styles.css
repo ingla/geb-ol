@@ -16,7 +16,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     background: linear-gradient(to right bottom,
-    #404030,#070707);
+    #404040,#070707);
     background-repeat: no-repeat;
     background-attachment: fixed;
 }

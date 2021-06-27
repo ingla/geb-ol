@@ -24,18 +24,35 @@
     </div>
 </div>
 <main>
-    <h1>Login</h1>
+    <h1>Logg inn</h1>
     <div th:if="${error}">
         Klarte ikke å logge deg inn. Sjekk brukernavn og passord
     </div>
 
     <form method="POST" th:action="@{/login}" id="loginForm">
-        <label for="username">Brukernavn</label>
-        <input type="text" name="username" id="username">
-        <label for="password">Passord:</label>
-        <input type="password" name="password" id="password">
-
-        <input type="submit" value="Login"/>
+        <table>
+            <tr>
+                <td class="fixed textleft">
+                    <label for="username">Brukernavn:</label>
+                </td>
+                <td>
+                    <input type="text" name="username" id="username">
+                </td>
+            </tr>
+            <tr>
+                <td class="fixed textleft">
+                    <label for="password">Passord:</label>
+                </td>
+                <td>
+                    <input type="password" name="password" id="password">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Logg inn"/>
+                </td>
+            </tr>
+        </table>
     </form>
 </main>
 <!-- Footer -->
