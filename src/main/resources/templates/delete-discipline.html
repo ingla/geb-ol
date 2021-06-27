@@ -23,7 +23,8 @@
     </div>
 </div>
 <main>
-    <h3>Slett gren</h3>
+    <h2>Slett gren</h2>
+    <br>
     <span th:if="${allDisciplines.size() == 0}">Ingen resultater opprettet</span>
     <form th:if="${allDisciplines.size() > 0}"
           th:action="@{/delete-discipline}"
@@ -34,8 +35,11 @@
                     th:text="${discipline.name}">
             </option>
         </select>
-        <input type="submit" id="submitButton" value="Slett gren">
+        <br>
+        <br>
+        <input type="submit" id="submitButton" value="Slett">
     </form>
+    <br>
     <p>
     <a th:href="@{/admin/disciplines}">
         <button type="button">Tilbake</button>

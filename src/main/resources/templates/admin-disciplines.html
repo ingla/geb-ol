@@ -48,7 +48,7 @@
     <table>
         <tr th:each="discipline : ${disciplineList}">
             <td class="textleft">
-                <a th:href="@{/disciplines/{name}(name=${discipline.name})}">
+                <a th:href="@{/schedule/{name}(name=${discipline.name})}">
                     <span th:text="${discipline.name}">
                     </span>
                 </a>

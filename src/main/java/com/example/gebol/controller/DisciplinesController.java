@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
-@RequestMapping("/disciplines")
+@RequestMapping("/schedule")
 public class DisciplinesController {
 
     private final DisciplineRepository disciplineRepository;
@@ -67,7 +67,7 @@ public class DisciplinesController {
         }
         model.addAttribute("program", program);
         model.addAttribute( "weekdays", weekdays);
-        return "disciplines";
+        return "schedule";
     }
 
     @GetMapping("/{name}")

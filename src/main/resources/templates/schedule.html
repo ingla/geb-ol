@@ -23,9 +23,9 @@
             </div>
         </div>
         <main>
-            <h1>
+            <h2>
                 Program
-            </h1>
+            </h2>
             <div class="container">
                 <table style="margin-left:20px; margin-right:20px">
                     <tr>
@@ -64,7 +64,7 @@
                                             </span>
                                         </td>
                                         <td class="fixed" style="text-align:left">
-                                            <a th:href="@{/disciplines/{name}(name=${discipline.name})}">
+                                            <a th:href="@{/schedule/{name}(name=${discipline.name})}">
                                                 <b th:text="${discipline.name}">
                                                 </b>
                                             </a>

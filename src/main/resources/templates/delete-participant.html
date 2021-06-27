@@ -23,7 +23,7 @@
     </div>
 </div>
 <main>
-    <h3>Slett deltager</h3>
+    <h2>Slett deltager</h2>
     <span th:if="${allParticipants.size() == 0}">Ingen deltagere opprettet</span>
     <form th:if="${allParticipants.size() > 0}"
           th:action="@{/delete-participant}"

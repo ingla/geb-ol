@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <h1 th:if="${disciplineResults.size() > 0}" th:text="Resultater"></h1>
+    <h2 th:if="${disciplineResults.size() > 0}" th:text="Resultater"></h2>
     <table th:if="${disciplineResults.size() > 0}">
         <tr>
 
@@ -93,7 +93,7 @@
     </tr>
     </table>
     <br>
-    <h1 th:if="${discipline.isCup}" th:text="Tabell"></h1>
+    <h2 th:if="${discipline.isCup}" th:text="Tabell"></h2>
     <br>
     <script th:if="${discipline.isCup}"
             th:inline="javascript">

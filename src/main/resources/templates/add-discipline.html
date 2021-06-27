@@ -23,7 +23,8 @@
     </div>
 </div>
 <main>
-    <h3>NY GREN</h3>
+    <h2>Ny gren</h2>
+    <br>
     <form method="post" th:action="@{/add-discipline}" th:object="${discipline}">
         <table>
             <tr>
@@ -47,11 +48,11 @@
             <tr>
                 <td>
                     <table>
-                            <td>
-                                <h6 style="width:1vw; display: inline;">Cup</h6>
-                                <input style="width:10px;" type="checkbox" name="cup" value="true" th:field="*{cup}">
+                            <td class="fixed small">
+                                <h6 style="width:1vw; display: inline; vertical-align:middle;">Cup</h6>
+                                <input style="width:10px; vertical-align:middle;" type="checkbox" name="cup" value="true" th:field="*{cup}">
                             </td>
-                            <td>
+                            <td class ="fixed">
                                 <button >Opprett gren</button>
                             </td>
 
