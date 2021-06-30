@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <head>
-        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
         <title>GEB OL - Grener</title>
         <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
         <link th:href="@{/css/styles.css}" rel="stylesheet"/>
     </head>
     <body>
-        <div class="header">
-            <div class="inner_header">
-                <a th:href="@{/}">
-                    <div class="center">
-                    <img th:src="@{/images/olympic-rings-geb.png}" width="250">
-                    </div>
-                    <h2 class="spacing-large">
-                        2021
-                    </h2>
-                    <h3>5. - 7. AUGUST</h3>
-                </a>
+        <div class="container">
+            <div class="header">
+                <div class="inner_header">
+                    <a th:href="@{/}">
+                        <div class="center">
+                            <img th:src="@{/images/olympic-rings-geb.png}" width="250">
+                        </div>
+                        <h2 class="spacing-large">2021</h2>
+                        <h3>5. - 7. AUGUST</h3>
+                    </a>
+                </div>
             </div>
         </div>
         <main>
@@ -27,7 +27,7 @@
                 Program
             </h2>
             <div class="container">
-                <table style="margin-left:20px; margin-right:20px">
+                <table class="sidePadded">
                     <tr>
                         <td>
                             <div class="container">

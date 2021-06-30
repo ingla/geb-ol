@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <title>GEB OL - Ny Gren</title>
     <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
+<div class="container">
 <div class="header">
     <div class="inner_header">
         <a th:href="@{/}">
@@ -22,54 +23,52 @@
         </a>
     </div>
 </div>
-<main>
-    <h2>Ny gren</h2>
-    <br>
-    <form method="post" th:action="@{/add-discipline}" th:object="${discipline}">
-        <table>
-            <tr>
-                <td>
-                    <h6>Navn</h6>
-                    <input type="text" th:field="*{name}" placeholder="Bowling" required>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h6>Sted</h6>
-                    <input type="text" th:field="*{location}" placeholder="Bowling1 Elverum" required>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <h6>Tid</h6>
-                    <input type="datetime-local" th:field="*{date}" required/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <table>
-                            <td class="fixed small">
-                                <h6 style="width:1vw; display: inline; vertical-align:middle;">Cup</h6>
-                                <input style="width:10px; vertical-align:middle;" type="checkbox" name="cup" value="true" th:field="*{cup}">
-                            </td>
-                            <td class ="fixed">
-                                <button >Opprett gren</button>
-                            </td>
+</div>
+    <main>
+        <h2>Ny gren</h2>
+        <br>
+        <form method="post" th:action="@{/add-discipline}" th:object="${discipline}">
+            <table>
+                <tr>
+                    <td>
+                        <h6>Navn</h6>
+                        <input type="text" th:field="*{name}" placeholder="Bowling" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h6>Sted</h6>
+                        <input type="text" th:field="*{location}" placeholder="Bowling1 Elverum" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h6>Tid</h6>
+                        <input type="datetime-local" th:field="*{date}" required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table>
+                                <td class="fixed small">
+                                    <h6 style="width:1vw; display: inline; vertical-align:middle;">Cup</h6>
+                                    <input style="width:10px; vertical-align:middle;" type="checkbox" name="cup" value="true" th:field="*{cup}">
+                                </td>
+                                <td class ="fixed">
+                                    <button >Opprett gren</button>
+                                </td>
 
-                    </table>
-                </td>
-            </tr>
-
-
-
-        </table>
-    </form>
-    <p>
-        <a th:href="@{/admin/disciplines}">
-            <button type="button">Tilbake</button>
-        </a>
-    </p>
-</main>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <p>
+            <a th:href="@{/admin/disciplines}">
+                <button type="button">Tilbake</button>
+            </a>
+        </p>
+    </main>
     <!-- Footer -->
     <div class="footer">
         <div class="inner_footer" title="...og Lars hjalp til">
