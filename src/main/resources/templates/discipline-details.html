@@ -4,7 +4,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
         <title th:text="${'GEB OL - ' + discipline.name}"> </title>
-        <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
+        <link rel="icon" type="image/svg+xml" th:href="@{/images/favicon-gebol-logo.svg}"/>
         <link th:href="@{/css/styles.css}" rel="stylesheet"/>
         <script th:src="@{/js/p5.min.js}"></script>
     </head>
@@ -109,9 +109,7 @@
                         }
 
                         function windowResized() {
-                            console.log(canvas.parentNode.parentNode.clientWidth -80);
-                            console.log(window.parent);
-                            var canvasSize = min(canvas.parentNode.parentNode.clientWidth,canvas.parentNode.parentNode.clientWidth,630);
+                            var canvasSize = min(canvas.parentNode.parentNode.clientWidth,canvas.parentNode.parentNode.clientWidth, 630);
                             resizeCanvas(canvasSize,canvasSize);
                         }
 
