@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
+/**
+ * ParticipantId will be -1 if not set.
+ * Score will be -1 if not set.
+ */
 @Data
 @NoArgsConstructor
 public class LiveResult {
@@ -21,7 +25,7 @@ public class LiveResult {
     @NotNull
     private Long disciplineId;
 
-    @Nullable
+    @NotNull
     private Long participantId;
 
     @NotNull
@@ -30,6 +34,6 @@ public class LiveResult {
     @NotNull
     private Integer place;
 
-    @Nullable
+    @NotNull
     private Integer score;
 }
