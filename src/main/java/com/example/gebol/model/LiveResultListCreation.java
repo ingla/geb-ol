@@ -1,5 +1,6 @@
 package com.example.gebol.model;
 
+import com.example.gebol.model.persistent.LiveResult;
 import com.example.gebol.model.persistent.Result;
 import lombok.Data;
 
@@ -7,19 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ResultListCreation {
+public class LiveResultListCreation {
 
-    private List<Result> results;
+    private List<LiveResult> results;
 
-    public ResultListCreation() {
+    public LiveResultListCreation() {
         results = new ArrayList<>();
     }
 
-    public ResultListCreation(List<Result> results) {
+    public LiveResultListCreation(List<LiveResult> results) {
         this.results = results;
     }
 
-    public void addResult(Result result) {
+    public void addResult(LiveResult result) {
         results.add(result);
     }
 }

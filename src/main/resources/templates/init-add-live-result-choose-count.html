@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>GEB OL</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/images/favicon-gebol-logo.svg}"/>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="inner_header">
+            <a th:href="@{/}">
+                <div class="center">
+                    <img th:src="@{/images/gebol-logo.svg}" width="250" height="120">
+                </div>
+                <h2 class="spacing-large">
+                    2021
+                </h2>
+                <h3>5. - 7. AUGUST</h3>
+            </a>
+        </div>
+    </div>
+</div>
+<main>
+    <h2>Legg til liveresultat</h2>
+    <h3>Velg gren</h3>
+    <br>
+    <span th:if="${allDisciplines.size() == 0}">Fant ingen cup-grener uten resultat fra før</span>
+    <form th:if="${allDisciplines.size() > 0}"
+          th:action="@{/init-add-live-result/choose-count}"
+          method="post" th:object="${addLiveResultUserInput}">
+        <select th:field="*{disciplineId}">
+            <option th:each="discipline : ${allDisciplines}"
+                    th:value="${discipline.id}"
+                    th:text="${discipline.name}">
+            </option>
+        </select>
+        <br>
+        <table>
+            <tr>
+                <td class="textleft">
+                    Antall deltagere:
+                    <input style="width:40px;" type="number" th:field="*{participantCount}">
+                </td>
+            </tr>
+        </table>
+        <br>
+        <p>
+                <button>Fortsett</button>
+        </p>
+    </form>
+    <br>
+    <p>
+    <a th:href="@{/admin/live-results}">
+        <button type="button">Tilbake</button>
+    </a>
+    </p>
+</main>
+    <!-- Footer -->
+    <div class="footer">
+        <div class="inner_footer" title="...og Lars hjalp til">
+            Laget av Ingvild og Sigurd
+        </div>
+    </div>
+
+</body>
+</html>

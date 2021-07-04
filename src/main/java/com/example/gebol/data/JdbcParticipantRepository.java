@@ -1,7 +1,6 @@
 package com.example.gebol.data;
 
-import com.example.gebol.model.Discipline;
-import com.example.gebol.model.Participant;
+import com.example.gebol.model.persistent.Participant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -12,7 +11,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import javax.servlet.http.Part;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;

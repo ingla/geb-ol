@@ -1,7 +1,6 @@
 package com.example.gebol.data;
 
-import com.example.gebol.model.LiveResult;
-import com.example.gebol.model.Result;
+import com.example.gebol.model.persistent.LiveResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -42,6 +41,19 @@ public class JdbcLiveResultRepository implements LiveResultRepository {
     public List<LiveResult> findByDisciplineId(Long disciplineId) {
         String sql = "select * from LiveResult where disciplineId = (?)";
         return jdbc.query(sql, this::mapRowToResult, disciplineId);
+    }
+
+    @Override
+    public Boolean hasDisciplineId(Long disciplineId) {
+        String sql = "select disciplineId from LiveResult where disciplineId = (?)";
+        List<Long> list = jdbc.queryForList(sql, Long.class, disciplineId);
+        return list.size() > 0;
+    }
+
+    @Override
+    public List<Long> findAllDisciplineIds() {
+        String sql = "select distinct disciplineId from LiveResult";
+        return jdbc.queryForList(sql, Long.class);
     }
 
     private LiveResult mapRowToResult(ResultSet rs, int rowNum) throws SQLException {

@@ -1,7 +1,6 @@
 package com.example.gebol.data;
 
-import com.example.gebol.model.Discipline;
-import com.example.gebol.model.Result;
+import com.example.gebol.model.persistent.Result;
 
 import java.util.List;
 

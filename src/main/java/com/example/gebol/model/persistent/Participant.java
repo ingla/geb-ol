@@ -1,4 +1,4 @@
-package com.example.gebol.model;
+package com.example.gebol.model.persistent;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
