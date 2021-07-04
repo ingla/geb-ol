@@ -5,18 +5,16 @@ import com.example.gebol.data.LiveResultRepository;
 import com.example.gebol.data.ParticipantRepository;
 import com.example.gebol.data.ResultRepository;
 import com.example.gebol.model.Discipline;
+import com.example.gebol.model.DisciplineLiveResult;
 import com.example.gebol.model.DisciplineResult;
-import com.example.gebol.model.LiveResult;
 import com.example.gebol.model.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.time.temporal.ChronoUnit;
@@ -95,9 +93,22 @@ public class DisciplinesController {
         model.addAttribute("disciplineResults", disciplineResults);
 
         // Get list of LiveResults for the discipline
-        List<LiveResult> liveResults = liveResultRepository.findByDisciplineId(d.getId());
-        model.addAttribute("liveResults", liveResults);
+        List<DisciplineLiveResult> liveResults = liveResultRepository.findByDisciplineId(d.getId())
+                .stream()
+                .map((res) -> new DisciplineLiveResult( // Map to DisciplineLiveResult objects
+                        getNameOrBlank(res.getParticipantId()),
+                        res.getLevel(),
+                        res.getPlace(),
+                        res.getScore()
+                )).collect(Collectors.toList());
 
+        model.addAttribute("liveResults", liveResults);
+        log.info(liveResults.toString());
         return "discipline-details";
+    }
+
+    private String getNameOrBlank(Long id) {
+        return participantRepository.hasParticipant(id) ?
+                participantRepository.getNameById(id) : "";
     }
 }

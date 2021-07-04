@@ -49,6 +49,23 @@ public class JdbcParticipantRepository implements ParticipantRepository {
                 id);
     }
 
+    public Boolean hasParticipant(Long id) {
+        String sql = "select * from Participant where id = (?)";
+        try {
+            jdbc.queryForObject(
+                    sql,
+                    (rs, rowNum) ->
+                            new Participant(
+                                    rs.getLong("id"),
+                                    rs.getString("name")
+                            ),
+                    id);
+            return true;
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+    }
+
     public Boolean hasParticipant(String name) {
         String sql = "select * from Participant where lower(name) = lower(?)";
         try {
