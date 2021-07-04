@@ -1,15 +1,14 @@
 package com.example.gebol.controller;
 
 import com.example.gebol.data.DisciplineRepository;
+import com.example.gebol.data.LiveResultRepository;
 import com.example.gebol.data.ParticipantRepository;
 import com.example.gebol.data.ResultRepository;
 import com.example.gebol.model.Discipline;
 import com.example.gebol.model.DisciplineResult;
-import com.example.gebol.model.Participant;
+import com.example.gebol.model.LiveResult;
 import com.example.gebol.model.Result;
-import com.gargoylesoftware.htmlunit.html.HtmlDateTimeLocalInput;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,15 +31,18 @@ public class DisciplinesController {
     private final DisciplineRepository disciplineRepository;
     private final ResultRepository resultRepository;
     private final ParticipantRepository participantRepository;
+    private final LiveResultRepository liveResultRepository;
 
     public DisciplinesController(
             DisciplineRepository disciplineRepository,
             ResultRepository resultRepository,
-            ParticipantRepository participantRepository
+            ParticipantRepository participantRepository,
+            LiveResultRepository liveResultRepository
     ) {
         this.disciplineRepository = disciplineRepository;
         this.resultRepository = resultRepository;
         this.participantRepository = participantRepository;
+        this.liveResultRepository = liveResultRepository;
     }
 
     @GetMapping
@@ -58,8 +60,7 @@ public class DisciplinesController {
 
             if (program.containsKey(key)) {
                 l1 = program.get(key);
-            }
-            else{
+            } else {
                 l1 = new ArrayList<>();
             }
             l1.add(d);
@@ -92,6 +93,10 @@ public class DisciplinesController {
                 .collect(Collectors.toList());
 
         model.addAttribute("disciplineResults", disciplineResults);
+
+        // Get list of LiveResults for the discipline
+        List<LiveResult> liveResults = liveResultRepository.findByDisciplineId(d.getId());
+        model.addAttribute("liveResults", liveResults);
 
         return "discipline-details";
     }

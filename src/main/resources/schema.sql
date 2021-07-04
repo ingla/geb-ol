@@ -15,4 +15,13 @@ create table if not exists Result (
 disciplineId bigint not null,
 participantId bigint not null,
 place int not null
-)
+);
+
+create table if not exists LiveResult (
+disciplineId bigint not null,
+bracketLevel bigint not null,
+place bigint not null,
+participantId bigint,
+score bigint,
+primary key (disciplineId, bracketLevel, place)
+);

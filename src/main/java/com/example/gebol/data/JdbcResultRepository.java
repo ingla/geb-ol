@@ -25,7 +25,7 @@ import java.util.List;
 @Slf4j
 public class JdbcResultRepository implements ResultRepository {
 
-    private JdbcTemplate jdbc;
+    private final JdbcTemplate jdbc;
 
     @Autowired
     public JdbcResultRepository(JdbcTemplate jdbc) {
