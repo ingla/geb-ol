@@ -44,15 +44,6 @@ public class ParticipantsController {
         this.standingResultsService = standingResultsService;
     }
 
-    @GetMapping
-    public String getParticipants(Model model) {
-        log.info("getParticipants");
-
-        Iterable<Participant> list = participantRepository.findAll();
-        model.addAttribute("participantList", list);
-        return "participants";
-    }
-
     @GetMapping("/{id}")
     public String getParticipantItem(Model model, @PathVariable Long id) {
         Participant p = participantRepository.findOne(id);

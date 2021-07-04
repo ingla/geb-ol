@@ -1,150 +1,226 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${'GEB OL - ' + discipline.name}"> </title>
-    <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
-    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
-    <script th:src="@{/js/p5.min.js}"></script>
-</head>
-<body>
-<div class="header">
-    <div class="inner_header">
-        <a th:href="@{/}">
-            <div class="center">
-            <img th:src="@{/images/olympic-rings-geb.png}" width = "250">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+        <title th:text="${'GEB OL - ' + discipline.name}"> </title>
+        <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
+        <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+        <script th:src="@{/js/p5.min.js}"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="inner_header">
+                    <a th:href="@{/}">
+                        <div class="center">
+                        <img th:src="@{/images/olympic-rings-geb.png}" width = "250">
+                        </div>
+                        <h2 class="spacing-large">
+                            2021
+                        </h2>
+                        <h3>5. - 7. AUGUST</h3>
+                    </a>
+                </div>
             </div>
-            <h2 class="spacing-large">
-                2021
-            </h2>
-            <h3>5. - 7. AUGUST</h3>
-        </a>
-    </div>
-</div>
-<main>
-    <h1 th:text="${discipline.name}"> Name</h1>
-    <div class="container">
-        <div>
-        <h4 th:text="${ #strings.capitalize(weekday) + ' ' + #temporals.day(discipline.date) + '/' + #temporals.month(discipline.date)+ '   ' + #temporals.format(discipline.date, 'HH:mm')}">Day</h4>
-        <h4 style="margin-bottom:1cm;" th:text="${discipline.location}"> Location</h4>
         </div>
-    </div>
+        <main>
+            <h1>
+            <span th:if="${discipline.name == 'Dart'}"> &#127919</span>
+            <span th:if="${discipline.name == 'Bowling'}"> &#127923</span>
+            <span th:if="${discipline.name == 'Idealtid'}"> &#9201</span>
+            <span th:if="${discipline.name == 'Basket'}"> &#127936</span>
+            <span th:if="${discipline.name == 'Tennis'}"> &#127934</span>
+            <span th:if="${discipline.name == 'Bordtennis'}"> &#127955</span>
+            <span th:if="${discipline.name == 'Badminton'}"> &#127992</span>
+            <span th:if="${discipline.name == 'Tverra'}"> &#129349</span>
+            <span th:if="${discipline.name == 'Frisbeegolf'}"> &#129359</span>
+            <span th:if="${discipline.name == 'Beerpong'}">
+                 <img th:src="@{/images/beerpong.png}" width = "40">
+                </span>
 
-    <h1 th:if="${disciplineResults.size() > 0}" th:text="Resultater"></h1>
-    <table th:if="${disciplineResults.size() > 0}">
-        <tr>
-            <th></th>
-            <th>Plass</th>
-            <th width = "20"></th>
-            <th class="textleft">Navn</th>
-            <th>Poeng</th>
-        </tr>
-    <tr th:each="result, itemStat : ${disciplineResults}">
-        <td th:if="${result.place == 1}" >
+            <span th:if="${discipline.name == 'Luftgevær'}">
+                <img th:src="@{/images/target.png}" width = "40">
+            </span>
+            <span th:if="${discipline.name == 'Petanque'}">
+                <img th:src="@{/images/petanque.png}" width = "40">
+            </span>
+            </h1>
+            <h1 th:text="${discipline.name}"> Name</h1>
+            <div class="container">
+                <div style="margin:10px">
+                    <h4 th:text="${#strings.capitalize(weekday) + ' ' + #temporals.day(discipline.date) + '/' + #temporals.month(discipline.date)+ '   ' + #temporals.format(discipline.date, 'HH:mm')}">Day</h4>
+                    <h4 th:text="${discipline.location}"> Location</h4>
+                </div>
+            </div>
+            <div class="container">
+                <div th:if="${disciplineResults.size() > 0}" class="resultBox">
 
-            <img th:src="@{/images/medalG.png}" width= "26" >
+                    <table>
+                        <tr>
+                            <td colspan="3">
+                                <h2 th:text="Resultater"></h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Plass</th>
+                            <th>Navn</th>
+                            <th>Poeng</th>
+                        </tr>
+                        <tr th:each="result, itemStat : ${disciplineResults}">
+                            <td th:if="${result.place == 1}">
+                                <h2><span>&#129351</span></h2>
+                <!--            <img th:src="@{/images/medalG.png}" width= "26" >-->
+                            </td>
+                            <td th:if="${result.place == 2}">
+                                <h2><span>&#129352</span></h2>
+                <!--            <img th:src="@{/images/medalS.png}" width= "25">-->
+                            </td>
+                            <td th:if="${result.place == 3}">
+                                <h2><span>&#129353</span></h2>
+                <!--            <img  th:src="@{/images/medalB.png}" width= "24">-->
+                            </td>
+                            <td th:if="${result.place > 3}">
+                                <span th:text="${result.place}">
+                                </span>
+                            </td>
+                            <td class="textleft" style="padding:  0 0 0 20px;">
+                                <a th:href="@{/participants/{id}(id=${result.participantId})}" th:text="${result.participantName}">
+                                </a>
+                            </td>
+                            <td th:text="${@pointCalculationService.getPointsForPlace(result.place)}"></td>
+                        </tr>
+                    </table>
+                </div>
 
-        </td>
-        <td th:if="${result.place == 2}">
-            <img th:src="@{/images/medalS.png}" width= "25">
-        </td>
-        <td th:if="${result.place == 3}">
-            <img  th:src="@{/images/medalB.png}" width= "24">
-        </td>
-        <td th:if="${result.place > 3}">
+                <div th:if="${discipline.isCup}" class="bracketBox">
 
-        </td>
-        <td th:text="${result.place}">
+                    <div id="bracketCanvas"></div>
 
-        </td>
-        <td></td>
-        <td class="textleft">
-            <a th:href="@{/participants/{id}(id=${result.participantId})}"
-               th:text="${result.participantName}">
-            </a>
-        </td>
-        <td th:text="${@pointCalculationService.getPointsForPlace(result.place)}"></td>
-    </tr>
-    </table>
+                    <script th:inline="javascript">
+                        function setup() {
+                            var canvas = createCanvas();
+                            canvas.parent('bracketCanvas');
+                            windowResized();
+                            windowResized();
+                            textAlign(CENTER, CENTER);
+                            strokeCap(SQUARE);
+                            noLoop();
+                        }
 
-    <h1 th:if="${discipline.isCup}" th:text="Tabell"></h1>
+                        function windowResized() {
+                            console.log(canvas.parentNode.parentNode.clientWidth -80);
+                            console.log(window.parent);
+                            var canvasSize = min(canvas.parentNode.parentNode.clientWidth,canvas.parentNode.parentNode.clientWidth,630);
+                            resizeCanvas(canvasSize,canvasSize);
+                        }
 
-    <script th:if="${discipline.isCup}"
-            th:inline="javascript">
-      function setup() {
-          createCanvas(790, 790);
-          textSize(width / 3);
-          textAlign(CENTER, CENTER);
-          strokeCap(SQUARE);
-          noLoop();
-      }
+                        function drawSlot(level, place, radius) {
+                            const gap = PI/500;
+                            const slots = level == 0 ? 4 : pow(2, level + 1);
+                            const weight = (radius(level) - radius(level - 1))/2 - level;
+                            const arcStart = TWO_PI/slots * place;
+                            const arcEnd = arcStart + TWO_PI/slots;
+                            const arcDiameter = radius(level) - weight;
 
-      function drawSlot(level, place, radius) {
-          const gap = PI/500;
-          const slots = level == 0 ? 4 : pow(2, level + 1);
-          const weight = (radius(level) - radius(level - 1))/2 - level;
-          const arcStart = TWO_PI/slots * place;
-          const arcEnd = arcStart + TWO_PI/slots;
-          const arcDiameter = radius(level) - weight;
+                            stroke(196 - 12 * ((place + level) % 2));
+                            strokeWeight(weight);
 
-          stroke(196 - 12 * ((place + level) % 2));
-          strokeWeight(weight);
+                            arc(0, 0, arcDiameter, arcDiameter, arcStart + gap, arcEnd - gap);
+                        }
 
-          arc(0, 0, arcDiameter, arcDiameter, arcStart + gap, arcEnd - gap);
-      }
+                        function drawSlots(layer, radius) {
+                            push();
+                            for (let i = 0; i < layer; i++) {
+                                for (let j = 0; j < pow(2, i + 1); j++) {
+                                    drawSlot(i, j, radius);
+                                }
+                            }
+                            drawSlot(0, 2, radius);
+                            drawSlot(0, 3, radius);
 
-      function drawSlots(contenders) {
-          push();
-          const n = contenders.length;
-          const levels = ceil(log(n)/log(2));
+                            pop();
+                        }
+                        function drawBrackets(n) {
+                            push();
+                            const layer = ceil((log(n)/log(2))-1);
+                            const inner_spots = pow(2,layer);
+                            const radius = level => {
+                                if (level < 0) {
+                                    return 0;
+                                }
+                                r0 = min(width,height)/sqrt(pow(2, layer));
+                                return sqrt(pow(2, level)) * r0;
+                            };
 
-          const radius = level => {
-              if (level < 0) {
-                  return 0;
-              }
+                            drawSlots(layer, radius);
 
-              r0 = width/sqrt(pow(2, levels - 1));
-              return sqrt(pow(2, level)) * r0;
-          };
+                            for (let i = 0; i < (n-inner_spots); i++) {    //n-spots gives the number of matches in the outer layer
+                                const matchPlace = table(layer, i); //best slot in the i'th best match in the outer layer
+                                drawSlot(layer, matchPlace * 2, radius);
+                                drawSlot(layer, opponent(matchPlace * 2), radius);
+                            }
+                            pop();
+                        }
 
-          for (i = 0; i < levels; i++) {
-              for (j = 0; j < pow(2, i + 1); j++) {
-                  drawSlot(i, j, radius);
-              }
-          }
+                        function table(l,p) {
+                            if (l == 0) {
+                                return 0;
+                            }
+                            const half = pow(2, l-1);
+                            if (p >= half) {
+                                return opponent(table(l,p-half));
+                            }
+                            return nextOuterSlot(l, table(l-1, p));
+                        }
 
-          drawSlot(0, 2, radius);
-          drawSlot(0, 3, radius);
+                        function opponent(n) {
+                            return (n % 2 == 0) ? n + 1 : n - 1;
+                        }
 
-          pop();
-      }
+                        function nextOuterSlot(l, p) {
+                            let blacks = 0;
+                            for (let i = 0; i < (l+1); i++) {
+                                if (((l-i) + floor(p/pow(2, i))) % 2 == 0) {
+                                    blacks = blacks + 1;
+                                }
+                            }
+                            if (blacks * 2 < l + 1) {
+                                return 2 * p + ((l + 1) % 2);
+                            }
+                            if (blacks * 2 > l + 1) {
+                                return 2 * p + (l % 2);
+                            }
+                            return 2 * p + ((l + p + 1) % 2);
+                        }
 
-      function draw() {
-          translate(width/2, height/2);
-          rotate(-PI/2);
+                        function draw() {
+                            translate(width/2, height/2);
+                            rotate(-PI/2);
+                            noFill();
+                            // Test array. Should be fetched from server.
+                            //const contenders = ['sigurd', 'ingvild', 'lars'] .concat(Array(15).fill('oki'));
+                            const contenders = [[${disciplineResults}]];
+                            const n = contenders.length;
+                            drawBrackets(n);
+                            //drawSlots(contenders);
+                            // Getting data through thymeleaf can be done with an insane amount
+                            // of brackets and a dollar-sign, like so:
+                            // fill(255, 255, 255);
+                            // text([[${discipline.name}]], 0, 0);
+                        }
+                    </script>
 
-          noFill();
+                </div>
+            </div>
+        </main>
+    <!-- Footer -->
+        <div class="footer">
+            <div class="inner_footer" title="...og Lars hjalp til">
+                Laget av Ingvild og Sigurd
+            </div>
+        </div>
 
-          // Test array. Should be fetched from server.
-          const contenders = ['sigurd', 'ingvild', 'lars'] .concat(Array(8).fill('oki'));
-          drawSlots(contenders);
-
-          // Getting data through thymeleaf can be done with an insane amount
-          // of brackets and a dollar-sign, like so:
-          //   fill(255, 255, 255);
-          //   text([[${discipline.name}]], 0, 0);
-      }
-    </script>
-
-</main>
-<!-- Footer -->
-<div class="footer">
-    <div class="inner_footer" title="...og Lars hjalp til">
-        Laget av Ingvild og Sigurd
-    </div>
-</div>
-
-</body>
+    </body>
 
 </html>

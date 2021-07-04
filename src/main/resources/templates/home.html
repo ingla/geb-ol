@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>GEB OL</title>
     <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
+<div class="container">
 <div class="header">
     <div class="inner_header">
         <a th:href="@{/}">
@@ -23,6 +23,7 @@
 
     </div>
 </div>
+</div>
 <main>
     <div class="container">
         <a th:href="@{/standings}">
@@ -31,17 +32,17 @@
             </div>
         </a>
 
-        <a th:href="@{/disciplines}">
+        <a th:href="@{/schedule}">
             <div class="nav-button">
                 Program
             </div>
         </a>
 
-        <a th:href="@{/participants}">
+<!--        <a th:href="@{/participants}">
             <div class="nav-button">
                 Deltagere
             </div>
-        </a>
+        </a>-->
 
 
     </div>

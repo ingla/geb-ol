@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>GEB OL</title>
     <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
+<div class="container">
 <div class="header">
     <div class="inner_header">
         <a th:href="@{/}">
@@ -21,6 +21,7 @@
             <h3>5. - 7. AUGUST</h3>
         </a>
     </div>
+</div>
 </div>
 <main>
     <div class="container">
@@ -37,15 +38,24 @@
         </a>
     </div>
 
+    <p>
+        <a th:href="@{/admin}">
+            <button type="button">Tilbake</button>
+        </a>
+    </p>
+
     <!--View list of disciplines-->
-    <tr th:each="discipline : ${disciplineList}">
-        <p>
-            <a th:href="@{/disciplines/{name}(name=${discipline.name})}">
-                <span th:text="${discipline.name}">
-                </span>
-            </a>
-        </p>
-    </tr>
+
+    <table>
+        <tr th:each="discipline : ${disciplineList}">
+            <td class="textleft">
+                <a th:href="@{/schedule/{name}(name=${discipline.name})}">
+                    <span th:text="${discipline.name}">
+                    </span>
+                </a>
+            </td>
+        </tr>
+    </table>
 </main>
 <!-- Footer -->
 <div class="footer">

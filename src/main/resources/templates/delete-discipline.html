@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>GEB OL - Ny Gren</title>
     <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
+<div class="container">
 <div class="header">
     <div class="inner_header">
         <a th:href="@{/}">
@@ -22,8 +22,10 @@
         </a>
     </div>
 </div>
+    <div class="container">
 <main>
-    <h3>Slett gren</h3>
+    <h2>Slett gren</h2>
+    <br>
     <span th:if="${allDisciplines.size() == 0}">Ingen resultater opprettet</span>
     <form th:if="${allDisciplines.size() > 0}"
           th:action="@{/delete-discipline}"
@@ -34,11 +36,16 @@
                     th:text="${discipline.name}">
             </option>
         </select>
-        <input type="submit" id="submitButton" value="Slett gren">
+        <br>
+        <br>
+        <input type="submit" id="submitButton" value="Slett">
     </form>
+    <br>
+    <p>
     <a th:href="@{/admin/disciplines}">
         <button type="button">Tilbake</button>
     </a>
+    </p>
 </main>
     <!-- Footer -->
     <div class="footer">

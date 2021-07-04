@@ -1,89 +1,100 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${'GEB OL - ' + participant.name}"> </title>
-    <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
-    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
-</head>
-<body>
-<div class="header">
-    <div class="inner_header">
-        <a th:href="@{/}">
-            <div class="center">
-            <img th:src="@{/images/olympic-rings-geb.png}" width="250">
-            </div>
-            <h2 class="spacing-large">
-                2021
-            </h2>
-            <h3>5. - 7. AUGUST</h3>
-        </a>
-    </div>
-</div>
-<main>
-    <h1 th:text="${participant.name}"> Name</h1>
-    <table th:if="${participantResults.size() > 0}">
-        <tr>
-            <th width = "60"></th>
-
-            <th class="textleft"> Gren</th>
-
-            <th width="60">Plass</th>
-
-            <th>Poeng</th>
-
-
-        </tr>
-        <tr>
-            <td></td>
-                <td class="textleft">
-                    <a th:href="@{/standings}"
-                       th:text="Sammenlagt">
-
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+        <title th:text="${'GEB OL - ' + participant.name}"> </title>
+        <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
+        <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="inner_header">
+                    <a th:href="@{/}">
+                        <div class="center">
+                        <img th:src="@{/images/olympic-rings-geb.png}" width="250">
+                        </div>
+                        <h2 class="spacing-large">
+                            2021
+                        </h2>
+                        <h3>5. - 7. AUGUST</h3>
                     </a>
-                </td>
-            <td th:text="${standingResult.place}">Place</td>
-            <td th:text="${standingResult.points}">Points</td>
-
-        </tr>
-        <tr th:each="result : ${participantResults}">
-            <td th:if="${result.place == 1}" >
-
-                <img th:src="@{/images/medalG.png}" width= "26" >
-
-            </td>
-            <td th:if="${result.place == 2}">
-                <img th:src="@{/images/medalS.png}" width= "25">
-            </td>
-            <td th:if="${result.place == 3}">
-                <img  th:src="@{/images/medalB.png}" width= "24">
-            </td>
-            <td th:if="${result.place > 3}">
-
-            </td>
-
-            <td class="textleft">
-                <a th:href="@{/disciplines/{name}(name=${result.disciplineName})}"
-                   th:text="${result.disciplineName}"></a>
-            </td>
-            <td th:text="${result.place}"></td>
-
-            <td th:text="${@pointCalculationService.getPointsForPlace(result.place)}"></td>
-
-        </tr>
-    </table>
-
-</main>
-<!-- Footer -->
-<div class="footer">
-    <div class="inner_footer" title="...og Lars hjalp til">
-        Laget av Ingvild og Sigurd
-    </div>
-</div>
-
-</body>
-
+                </div>
+            </div>
+        </div>
+        <main>
+            <h1 th:text="${participant.name}"> Name</h1>
+            <div class="container">
+                <table class="sidePadded" th:if="${participantResults.size() > 0}">
+                    <tr>
+                        <th colspan = "2"> Gren</th>
+                        <th width="60">Plass</th>
+                        <th>Poeng</th>
+                    </tr>
+                    <tr class="firstLine">
+                        <td>
+                            <span>&#127942</span>
+                        </td>
+                        <td class="textleft" >
+                            <a th:href="@{/standings}" th:text="Sammenlagt">
+                            </a>
+                        </td>
+                        <td th:text="${standingResult.place}">Place</td>
+                        <td th:text="${standingResult.points}">Points</td>
+                    </tr>
+                    <tr th:each="result : ${participantResults}">
+                        <td width = "40">
+                            <span th:if="${result.disciplineName == 'Dart'}"> &#127919</span>
+                            <span th:if="${result.disciplineName == 'Bowling'}"> &#127923</span>
+                            <span th:if="${result.disciplineName == 'Idealtid'}"> &#9201</span>
+                            <span th:if="${result.disciplineName == 'Basket'}"> &#127936</span>
+                            <span th:if="${result.disciplineName == 'Tennis'}"> &#127934</span>
+                            <span th:if="${result.disciplineName == 'Bordtennis'}"> &#127955</span>
+                            <span th:if="${result.disciplineName == 'Badminton'}"> &#127992</span>
+                            <span th:if="${result.disciplineName == 'Tverra'}"> &#129349</span>
+                            <span th:if="${result.disciplineName == 'Frisbeegolf'}"> &#129359</span>
+                            <span th:if="${result.disciplineName == 'Beerpong'}">
+                                <img th:src="@{/images/beerpong.png}" width = "20">
+                            </span>
+                            <span th:if="${result.disciplineName == 'Luftgevær'}">
+                                <img th:src="@{/images/target.png}" width = "20">
+                            </span>
+                            <span th:if="${result.disciplineName == 'Petanque'}">
+                                <img th:src="@{/images/petanque.png}" width = "20">
+                            </span>
+                        </td>
+                        <td class="textleft">
+                            <a th:href="@{/schedule/{name}(name=${result.disciplineName})}"
+                               th:text="${result.disciplineName}"></a>
+                        </td>
+                        <td th:if="${result.place == 1}" >
+                            <h2><span>&#129351</span></h2>
+                            <!--                <img th:src="@{/images/medalG.png}" width= "26" >-->
+                        </td>
+                        <td th:if="${result.place == 2}">
+                            <h2><span>&#129352</span></h2>
+                            <!--                <img th:src="@{/images/medalS.png}" width= "25">-->
+                        </td>
+                        <td th:if="${result.place == 3}">
+                            <h2><span>&#129353</span></h2>
+                            <!--                <img  th:src="@{/images/medalB.png}" width= "24">-->
+                        </td>
+                        <td th:if="${result.place > 3}">
+                            <span th:text="${result.place}"></span>
+                        </td>
+                        <td th:text="${@pointCalculationService.getPointsForPlace(result.place)}"></td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+        <!-- Footer -->
+        <div class="footer">
+            <div class="inner_footer" title="...og Lars hjalp til">
+                Laget av Ingvild og Sigurd
+            </div>
+        </div>
+    </body>
 </html>
 
 

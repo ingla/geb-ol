@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>GEB OL - Resultater</title>
     <link rel="icon" type="image/png" th:href="@{/images/olympic-rings-geb-square.png}"/>
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 <body>
+<div class="container">
 <div class="header">
     <div class="inner_header">
         <a th:href="@{/}">
@@ -22,33 +23,38 @@
         </a>
     </div>
 </div>
+</div>
 <main>
-<h1>Sammenlagt</h1>
-    <table>
-        <tr>
+    <h1>
+        <span>&#127942</span>
+    </h1>
+    <h1>Sammenlagt</h1>
+    <div class="container">
+        <table class="sidePadded">
+            <tr>
+                <th> Plass</th>
+                <th width="20"></th>
+                <th class="textleft">Navn</th>
+                <th>Poeng</th>
+                <th></th>
+            </tr>
+            <tr th:each="result : ${standingResults}">
+                <td th:text="${result.place}"></td>
+                <td></td>
 
-            <th> Plass</th>
-            <th width="20"></th>
-            <th class="textleft">Navn</th>
-            <th>Poeng</th>
-            <th></th>
-        </tr>
-        <tr th:each="result : ${standingResults}">
-            <td th:text="${result.place}"></td>
-            <td></td>
+                <td class="textleft" >
+                    <a th:href="@{/participants/{id}(id=${result.participantId})}"
+                       th:text="${result.participantName}">
+                </td>
+                <td th:text="${result.points}"></td>
 
-            <td class="textleft" >
-                <a th:href="@{/participants/{id}(id=${result.participantId})}"
-                   th:text="${result.participantName}">
-            </td>
-            <td th:text="${result.points}"></td>
+                <td>
 
-            <td>
+                </td>
 
-            </td>
-
-        </tr>
-    </table>
+            </tr>
+        </table>
+    </div>
 </main>
     <!-- Footer -->
     <div class="footer">
