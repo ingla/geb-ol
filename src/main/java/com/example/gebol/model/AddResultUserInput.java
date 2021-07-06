@@ -3,6 +3,7 @@ package com.example.gebol.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -18,5 +19,6 @@ public class AddResultUserInput {
     private Long disciplineId;
 
     @NotNull
+    @Min(value = 4, message = "Antall deltagere må være minst 4")
     private int participantCount;
 }

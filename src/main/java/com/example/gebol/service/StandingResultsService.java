@@ -2,7 +2,7 @@ package com.example.gebol.service;
 
 import com.example.gebol.data.ParticipantRepository;
 import com.example.gebol.data.ResultRepository;
-import com.example.gebol.model.Participant;
+import com.example.gebol.model.persistent.Participant;
 import com.example.gebol.model.StandingResult;
 import org.springframework.stereotype.Service;
 

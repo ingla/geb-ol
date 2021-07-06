@@ -1,7 +1,7 @@
 package com.example.gebol.controller;
 
 import com.example.gebol.data.ParticipantRepository;
-import com.example.gebol.model.Participant;
+import com.example.gebol.model.persistent.Participant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,11 +35,7 @@ public class CreateParticipantController {
     }
 
     @PostMapping
-    public String processParticipant(@Valid @ModelAttribute Participant participant, BindingResult result, Errors errors) {
-        if (errors.hasErrors()) {
-            return "add-participant";
-        }
-
+    public String processParticipant(@Valid @ModelAttribute Participant participant, BindingResult result) {
         // Check if participant already exists in database.
         if (participantRepository.hasParticipant(participant.getName())) {
             ObjectError objectError = new ObjectError("globalError", "Deltager allerede lagt til");

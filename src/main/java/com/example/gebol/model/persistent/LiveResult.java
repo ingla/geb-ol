@@ -1,4 +1,4 @@
-package com.example.gebol.model;
+package com.example.gebol.model.persistent;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,5 +35,8 @@ public class LiveResult {
     private Integer place;
 
     @NotNull
-    private Integer score;
+    private Integer score = -1;
+
+    @NotNull
+    private Boolean knockedOut = false;
 }

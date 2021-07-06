@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>GEB OL - Ny Gren</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/images/favicon-gebol-logo.svg}"/>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+<div class="header">
+    <div class="inner_header">
+        <a th:href="@{/}">
+            <div class="center">
+                <img th:src="@{/images/gebol-logo.svg}" width="250" height="120">
+            </div>
+            <h2 class="spacing-large">
+                2021
+            </h2>
+            <h3>5. - 7. AUGUST</h3>
+        </a>
+    </div>
+</div>
+</div>
+<main>
+    <h2 th:text="${discipline.name}"></h2>
+    <h3>Legg til plassering</h3>
+        <form action="#" method="post" th:object="${liveResultListCreation}" th:action="@{/save-live-results}">
+            <span th:if="${#fields.hasErrors('global')}">
+                <p th:each="err: ${#fields.errors('global')}"
+                   th:text="${err}"
+                   class = "error">
+                </p>
+            </span>
+            <fieldset>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Nivå</th>
+                        <th>Plass</th>
+                        <th>Deltager</th>
+                        <th>Score</th>
+                        <th>Utslått</th>
+                    </tr>
+                    </thead>
+                    <!--'results' is a variable in the LiveResultListCreation class-->
+                    <tr th:each="result, itemStat : *{results}">
+                        <td th:text="${result.level}"></td>
+                        <td th:text="${result.place}"></td>
+                        <td> <select th:field="*{results[__${itemStat.index}__].participantId}">
+                            <option th:each="participant : ${allParticipants}"
+                                    th:value="${participant.id}"
+                                    th:text="${participant.name}">
+                            </option>
+                        </select>
+                        </td>
+                        <td>
+                            <input style="width:40px;" type="number" th:field="*{results[__${itemStat.index}__].score}">
+                        </td>
+                        <td>
+                            <input style="width:40px;" type="checkbox" name="knocked out" value=false
+                                   th:field="*{results[__${itemStat.index}__].knockedOut}">
+                        </td>
+                        <input type="hidden"
+                               th:field="*{results[__${itemStat.index}__].place}"/>
+                        <input type="hidden"
+                               th:field="*{results[__${itemStat.index}__].disciplineId}"/>
+                        <input type="hidden"
+                               th:field="*{results[__${itemStat.index}__].level}"/>
+                    </tr>
+                </table>
+                <input type="submit" id="submitButton" th:value="Lagre">
+            </fieldset>
+        </form>
+    <p>
+    <a th:href="@{/admin/live-results}">
+        <button type="button">Tilbake</button>
+    </a>
+    </p>
+</main>
+<!-- Footer -->
+    <div class="footer">
+        <div class="inner_footer" title="...og Lars hjalp til">
+            Laget av Ingvild og Sigurd
+        </div>
+    </div>
+
+</body>
+</html>
