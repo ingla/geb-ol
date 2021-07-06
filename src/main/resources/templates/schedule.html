@@ -27,11 +27,11 @@
                 Program
             </h2>
             <div class="container">
-                <table class="sidePadded">
+                <table>
                     <tr>
                         <td>
                             <div class="container">
-                                <table th:each="programDate : ${weekdays}">
+                                <table class="sidePadded"  th:each="programDate : ${weekdays}">
                                     <tr>
                                         <td colspan="4" >
                                             <b style = "font-variant-caps: small-caps" th:text="${#strings.capitalize(programDate.value) + ' ' + #temporals.day(programDate.key) + '/' + #temporals.month(programDate.key)}">
@@ -69,7 +69,7 @@
                                                 </b>
                                             </a>
                                         </td>
-                                        <td class="fixed large" th:text="${discipline.location}">
+                                        <td class="fixed large" style="text-align:left" th:text="${discipline.location}">
                                         </td>
                                     </tr>
                                 </table>

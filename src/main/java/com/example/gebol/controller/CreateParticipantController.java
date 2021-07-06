@@ -43,7 +43,7 @@ public class CreateParticipantController {
             return "add-participant";
 
         } else {
-            participantRepository.save(participant);
+            Participant p = participantRepository.save(participant);
         }
         return "redirect:/admin/participants";
     }
