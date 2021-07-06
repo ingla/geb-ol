@@ -35,11 +35,7 @@ public class CreateParticipantController {
     }
 
     @PostMapping
-    public String processParticipant(@Valid @ModelAttribute Participant participant, BindingResult result, Errors errors) {
-        if (errors.hasErrors()) {
-            return "add-participant";
-        }
-
+    public String processParticipant(@Valid @ModelAttribute Participant participant, BindingResult result) {
         // Check if participant already exists in database.
         if (participantRepository.hasParticipant(participant.getName())) {
             ObjectError objectError = new ObjectError("globalError", "Deltager allerede lagt til");

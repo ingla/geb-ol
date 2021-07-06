@@ -14,9 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,20 +44,21 @@ public class AddLiveResultController {
     @GetMapping("/init-add-live-result/choose-count")
     public String addLiveResultChooseCount(Model model) {
         log.info("addLiveResult");
-        Iterable<Discipline> disciplinesWithoutResult = disciplineRepository.findAll()
-                .stream()
-                .filter(discipline -> !liveResultRepository.hasDisciplineId(discipline.getId()))
-                .filter(discipline -> discipline.isCup())
-                .collect(Collectors.toList());
-
-        model.addAttribute("allDisciplines", disciplinesWithoutResult);
+        model.addAttribute("allDisciplines", getDisciplinesWithoutResult());
         model.addAttribute("addLiveResultUserInput", new AddLiveResultUserInput());
         return "init-add-live-result-choose-count";
     }
 
     @PostMapping("/init-add-live-result/choose-count")
-    public String processAddResultChooseCount(Model model, AddLiveResultUserInput addLiveResultUserInput) {
+    public String processAddResultChooseCount(Model model, @Valid @ModelAttribute AddLiveResultUserInput addLiveResultUserInput, BindingResult result) {
         log.info("post choose count, addliveresult: " + addLiveResultUserInput);
+
+        if (result.hasErrors()) {
+            log.info("Error");
+            model.addAttribute("allDisciplines", getDisciplinesWithoutResult());
+            return "init-add-live-result-choose-count";
+        }
+
         model.addAttribute("addLiveResultUserInput", addLiveResultUserInput);
 
         // Get valid levels based on participantCount
@@ -142,5 +147,13 @@ public class AddLiveResultController {
 
         liveResultRepository.saveAll(liveResultListCreation.getResults());
         return "redirect:/admin/live-results";
+    }
+
+    private Iterable<Discipline> getDisciplinesWithoutResult() {
+        return disciplineRepository.findAll()
+                .stream()
+                .filter(discipline -> !liveResultRepository.hasDisciplineId(discipline.getId()))
+                .filter(discipline -> discipline.isCup())
+                .collect(Collectors.toList());
     }
 }

@@ -31,6 +31,7 @@
     <form th:if="${allDisciplines.size() > 0}"
           th:action="@{/init-add-live-result/choose-count}"
           method="post" th:object="${addLiveResultUserInput}">
+
         <select th:field="*{disciplineId}">
             <option th:each="discipline : ${allDisciplines}"
                     th:value="${discipline.id}"
@@ -44,6 +45,13 @@
                     Antall deltagere:
                     <input style="width:40px;" type="number" th:field="*{participantCount}">
                 </td>
+            </tr>
+            <tr th:if="${#fields.hasErrors('participantCount')}">
+                <p th:each="err: ${#fields.errors('participantCount')}"
+                   th:text="${err}"
+                   class = "error">
+                </p>
+            </tr>
             </tr>
         </table>
         <br>
