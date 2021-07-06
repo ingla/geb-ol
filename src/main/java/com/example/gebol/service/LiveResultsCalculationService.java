@@ -56,10 +56,9 @@ public class LiveResultsCalculationService {
 
     public static int getLeftoverCount(int level, int participantCount) {
         double log2 = Math.log(participantCount) / Math.log(2);
-        Double ceil = Math.ceil(log2);
-        Double floor = Math.floor(log2);
+        double floor = Math.floor(log2);
 
-        if (floor.equals(ceil) || (level < floor)) {
+        if (levelIsFull(level, participantCount)) {
             return 0;
         }
 
