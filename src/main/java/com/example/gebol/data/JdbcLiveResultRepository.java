@@ -29,10 +29,33 @@ public class JdbcLiveResultRepository implements LiveResultRepository {
         return result;
     }
 
+    public LiveResult update(LiveResult result) {
+        String update = "update LiveResult set participantId = (?), score = (?), knockedOut = (?)";
+        String where = "where disciplineId = (?) and bracketLevel = (?) and place = (?)";
+
+        jdbc.update(update + where,
+                result.getParticipantId(),
+                result.getScore(),
+                result.getKnockedOut(),
+                result.getDisciplineId(),
+                result.getLevel(),
+                result.getPlace()
+                );
+        return result;
+    }
+
     @Override
     public List<LiveResult> saveAll(List<LiveResult> liveResults) {
         for (LiveResult result : liveResults) {
             save(result);
+        }
+        return liveResults;
+    }
+
+    @Override
+    public List<LiveResult> updateAll(List<LiveResult> liveResults) {
+        for (LiveResult result : liveResults) {
+            update(result);
         }
         return liveResults;
     }

@@ -46,8 +46,16 @@ public class LiveResultsCalculationService {
         return slotCount;
     }
 
+    public static Boolean levelIsFull(int level, int participantCount) {
+        double log2 = Math.log(participantCount) / Math.log(2);
+        Double ceil = Math.ceil(log2);
+        Double floor = Math.floor(log2);
+
+        return floor.equals(ceil) || (level < floor);
+    }
+
     public static int getLeftoverCount(int level, int participantCount) {
-        Double log2 = Math.log(participantCount) / Math.log(2);
+        double log2 = Math.log(participantCount) / Math.log(2);
         Double ceil = Math.ceil(log2);
         Double floor = Math.floor(log2);
 
