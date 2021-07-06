@@ -24,6 +24,6 @@ values (1, 1, 2), (1, 3, 3), (1, 4, 4), (1, 5, 5),
 (11, 1, 12), (11, 3, 3), (11, 4, 4), (11, 5, 5),
 (11, 2, 2),(11, 6, 6),(11, 7, 7),(11, 8, 8),(11, 9, 9),(11, 10, 10),(11, 11, 11),(11, 12, 1),(11, 13, 13),(11, 14, 14),(11,16,15),(11,15,16);
 
-insert into LiveResult (disciplineId, bracketLevel, place, participantId, score)
-values (8, 1, 0, 0, -1), (8, 1, 1, 1, -1), (8, 1, 2, 2, 2), (8, 1, 3, 3, 0),
-(8, 0, 0, -1, -1), (8, 0, 1, -1, -1), (8, 0, 2, -1, -1), (8, 0, 3, -1, -1);
+insert into LiveResult (disciplineId, bracketLevel, place, participantId, score, knockedOut)
+values (8, 1, 0, 0, -1, false), (8, 1, 1, 1, -1, false), (8, 1, 2, 2, 2, false), (8, 1, 3, 3, 0, false),
+(8, 0, 0, -1, -1, false), (8, 0, 1, -1, -1, false), (8, 0, 2, -1, -1, false), (8, 0, 3, -1, -1, false);

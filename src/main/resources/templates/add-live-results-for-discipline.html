@@ -41,6 +41,7 @@
                         <th>Plass</th>
                         <th>Deltager</th>
                         <th>Score</th>
+                        <th>Utslått</th>
                     </tr>
                     </thead>
                     <!--'results' is a variable in the LiveResultListCreation class-->
@@ -56,6 +57,10 @@
                         </td>
                         <td>
                             <input style="width:40px;" type="number" th:field="*{results[__${itemStat.index}__].score}">
+                        </td>
+                        <td>
+                            <input style="width:40px;" type="checkbox" name="knocked out" value=false
+                                   th:field="*{results[__${itemStat.index}__].knockedOut}">
                         </td>
                         <input type="hidden"
                                th:field="*{results[__${itemStat.index}__].place}"/>

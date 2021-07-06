@@ -23,5 +23,6 @@ bracketLevel bigint not null,
 place bigint not null,
 participantId bigint,
 score bigint,
+knockedOut boolean,
 primary key (disciplineId, bracketLevel, place)
 );

@@ -36,4 +36,7 @@ public class LiveResult {
 
     @NotNull
     private Integer score = -1;
+
+    @NotNull
+    private Boolean knockedOut = false;
 }
