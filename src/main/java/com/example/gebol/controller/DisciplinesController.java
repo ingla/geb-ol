@@ -99,7 +99,8 @@ public class DisciplinesController {
                         getNameOrBlank(res.getParticipantId()),
                         res.getLevel(),
                         res.getPlace(),
-                        res.getScore()
+                        res.getScore(),
+                        res.getKnockedOut()
                 )).collect(Collectors.toList());
 
         model.addAttribute("liveResults", liveResults);

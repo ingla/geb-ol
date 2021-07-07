@@ -24,8 +24,8 @@ public class JdbcLiveResultRepository implements LiveResultRepository {
 
     @Override
     public LiveResult save(LiveResult result) {
-        jdbc.update("insert into LiveResult (disciplineId, bracketLevel, place, participantId, score) values (?, ?, ?, ?, ?)",
-                result.getDisciplineId(), result.getLevel(), result.getPlace(), result.getParticipantId(), result.getScore());
+        jdbc.update("insert into LiveResult (disciplineId, bracketLevel, place, participantId, score, knockedOut) values (?, ?, ?, ?, ?, ?)",
+                result.getDisciplineId(), result.getLevel(), result.getPlace(), result.getParticipantId(), result.getScore(), result.getKnockedOut());
         return result;
     }
 
@@ -86,6 +86,7 @@ public class JdbcLiveResultRepository implements LiveResultRepository {
         r.setPlace(rs.getInt("place"));
         r.setLevel(rs.getInt("bracketLevel"));
         r.setScore(rs.getInt("score"));
+        r.setKnockedOut(rs.getBoolean("knockedOut"));
         return r;
     }
 }

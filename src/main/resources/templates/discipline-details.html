@@ -55,7 +55,6 @@
             </div>
             <div class="container">
                 <div th:if="${disciplineResults.size() > 0}" class="resultBox">
-
                     <table>
                         <tr>
                             <td colspan="3">
@@ -92,11 +91,8 @@
                         </tr>
                     </table>
                 </div>
-
                 <div th:if="${liveResults.size() > 0}" class="bracketBox">
-
                     <div id="bracketCanvas"></div>
-
                     <script th:inline="javascript">
                         var levels;
 
@@ -107,6 +103,7 @@
                             windowResized();
                             textAlign(CENTER, CENTER);
                             strokeCap(SQUARE);
+                            textFont('Roboto');
                             noLoop();
                         }
 
@@ -124,43 +121,107 @@
                         }
 
                         function drawSlot(liveResult) {
-                            const gap = PI/500;
+                            const gap = PI/400;
                             const lvl = liveResult.level;
                             const slots = lvl == 0 ? 4 : pow(2, lvl + 1);
                             const weight = (radius(lvl) - radius(lvl - 1))/2 - lvl;
                             const arcStart = TWO_PI/slots * liveResult.place;
                             const arcEnd = arcStart + TWO_PI/slots;
                             const arcDiameter = radius(lvl) - weight;
+                            var knockedOutColor = 128;
 
-                            stroke(196 - 12 * ((liveResult.place + lvl) % 2));
+                            stroke(184 + 24 * ((liveResult.place + lvl) % 2));
                             strokeWeight(weight);
 
-                            arc(0, 0, arcDiameter, arcDiameter, arcStart + gap, arcEnd - gap);
+                            if(liveResult.place % 2 == 0 ^ lvl == 0){
+                                arc(0, 0, arcDiameter, arcDiameter, arcStart + gap, arcEnd);
+                            } else {
+                                arc(0, 0, arcDiameter, arcDiameter, arcStart, arcEnd - gap);
+                            }
 
                             push();
-                            rotate(arcStart + PI/slots);
-                            noStroke();
-                            fill(255, 0, 0);
+                            if (liveResult.place % 2 == 0) {
+                                rotate(arcStart + PI/slots + gap/2);
+                            } else {
+                                rotate(arcStart + PI/slots - gap/2);
+                            }
 
+                            if (liveResult.score == -1){
+                                liveResult.score = ""
+                            }
+                            else{
+                                liveResult.score = str(liveResult.score)
+                            }
                             if (lvl != 0) {
-                                translate(radius(lvl + 1) - radius(lvl), 0);
+                                translate(radius(lvl + 1) - radius(lvl) + lvl * 2, 0);
                                 if (lvl < 4) {
                                     rotate(HALF_PI);
-
                                     if ((liveResult.place * 4 + slots) % (slots * 4) >= slots * 2) {
                                         rotate(PI);
                                     }
-
                                 } else if (liveResult.place * 2 >= slots) {
                                     rotate(PI);
                                 }
-
                             } else {
-                                translate(arcDiameter/3, 0);
-                                rotate(-(arcStart + PI/slots - HALF_PI));
+                                translate(weight/1.618, 0);
+                                rotate(HALF_PI)
+                                rotate(-(arcStart + PI/slots));
                             }
+                            noStroke();
+                            if (!liveResult.knockedOut) {
+                                textFont('Roboto');
+                            } else {
+                                textFont('Roboto Light');
+                            }
+                            fill(knockedOutColor * liveResult.knockedOut);
+                            textFont('Roboto');
+                            text(liveResult.participantName, 0, 0);
+                            pop();
 
-                            text(liveResult.participantId, 0, 0);
+                            push()
+                            const scoreBoxWidth = width/80;
+                            const scoreBoxHeight = height/80;
+
+                            rotate(arcStart + PI / slots);
+                            var buff = 0;
+                            if (lvl != 0) {
+                                if ((liveResult.place) % 2 == 0){
+                                    rotate(PI/slots);
+                                }
+                                else{
+                                    rotate(- PI / slots);
+                                }
+                                buff = scoreBoxWidth;
+                                if ((liveResult.place) % 2 == 0){
+                                    buff = -buff;
+                                }
+                            }
+                            if (lvl > 0){
+                                translate(radius(lvl) / 2 - scoreBoxHeight * 1.5, 0);
+                            }
+                            else{
+                                if (liveResult.place % 2 == 0){
+                                    translate((weight) / sqrt(2), - ((weight - scoreBoxWidth * 3) / sqrt(2)));
+                                }
+                                else{
+                                    translate((weight) / sqrt(2), ((weight - scoreBoxWidth * 3) / sqrt(2)));
+                                }
+                            }
+                            rotate(HALF_PI);
+                            if (lvl == 0){
+                                rotate(- (arcStart + PI / slots));
+                            }
+                            else if (((liveResult.place * 4 + slots) % (slots * 4) >= slots * 2) && lvl != 1){
+                                rotate(PI);
+                                buff = -buff;
+                            }
+                            rectMode(RADIUS);
+                            noStroke();
+                            fill(208 - 24 * ((liveResult.place + lvl) % 2));
+                            rect(buff * 1.5, 0, scoreBoxWidth, scoreBoxHeight);
+
+                            fill(0);
+                            text(liveResult.score,  buff*1.5, 0);
                             pop();
                         }
 

@@ -14,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -91,13 +89,12 @@ public class AddLiveResultController {
 
         int level = addLiveResultUserInput.getLevel();
         int participantCount = addLiveResultUserInput.getParticipantCount();
-        int leftoverCount = LiveResultsCalculationService.getLeftoverCount(level, participantCount);
+        int leftoverCount = LiveResultsCalculationService.getCountMatchesInExtraLevel(level, participantCount);
         double placesCount = LiveResultsCalculationService.getSlotCountForLevel(level);
 
         if (leftoverCount > 0) {
             List<Integer> placesToBeFilled = LiveResultsCalculationService.getPlacesToBeFilled(
                     level,
-                    participantCount,
                     leftoverCount
             );
 
@@ -188,8 +185,8 @@ public class AddLiveResultController {
                     emptySlots.add(r);
                 }
             } else {
-                int leftovers = LiveResultsCalculationService.getLeftoverCount(level, participantCount);
-                List<Integer> placesToBeFilled = LiveResultsCalculationService.getPlacesToBeFilled(level, participantCount, leftovers);
+                int leftovers = LiveResultsCalculationService.getCountMatchesInExtraLevel(level, participantCount);
+                List<Integer> placesToBeFilled = LiveResultsCalculationService.getPlacesToBeFilled(level, leftovers);
                 for (int place : placesToBeFilled) {
                     LiveResult r = new LiveResult();
                     r.setDisciplineId(discipline.getId());
