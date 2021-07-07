@@ -27,9 +27,9 @@
     <h2>Legg til liveresultat</h2>
     <h3>Velg gren</h3>
     <br>
-    <span th:if="${allDisciplines.size() == 0}">Fant ingen cup-grener uten resultat fra før</span>
+    <span th:if="${allDisciplines.size() == 0}">Fant ingen cup-grener med resultat fra før</span>
     <form th:if="${allDisciplines.size() > 0}"
-          th:action="@{/init-add-live-result/choose-count}"
+          th:action="@{/add-live-result/choose-discipline}"
           method="post" th:object="${addLiveResultUserInput}">
 
         <select th:field="*{disciplineId}">
@@ -39,39 +39,24 @@
             </option>
         </select>
         <br>
-        <table>
-            <tr>
-                <td class="textleft">
-                    Antall deltagere:
-                    <input style="width:40px;" type="number" th:field="*{participantCount}">
-                </td>
-            </tr>
-            <tr th:if="${#fields.hasErrors('participantCount')}">
-                <p th:each="err: ${#fields.errors('participantCount')}"
-                   th:text="${err}"
-                   class = "error">
-                </p>
-            </tr>
-            </tr>
-        </table>
         <br>
         <p>
-                <button>Fortsett</button>
+            <button>Fortsett</button>
         </p>
     </form>
     <br>
     <p>
-    <a th:href="@{/admin/live-results}">
-        <button type="button">Tilbake</button>
-    </a>
+        <a th:href="@{/admin/live-results}">
+            <button type="button">Tilbake</button>
+        </a>
     </p>
 </main>
-    <!-- Footer -->
-    <div class="footer">
-        <div class="inner_footer" title="...og Lars hjalp til">
-            Laget av Ingvild og Sigurd
-        </div>
+<!-- Footer -->
+<div class="footer">
+    <div class="inner_footer" title="...og Lars hjalp til">
+        Laget av Ingvild og Sigurd
     </div>
+</div>
 
 </body>
 </html>

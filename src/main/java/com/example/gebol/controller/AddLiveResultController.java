@@ -43,22 +43,22 @@ public class AddLiveResultController {
         this.disciplineRepository = disciplineRepository;
     }
 
-    @GetMapping("/init-add-live-result/choose-count")
+    @GetMapping("/init-add-live-result")
     public String addLiveResultChooseCount(Model model) {
         log.info("addLiveResult");
-        model.addAttribute("allDisciplines", getDisciplinesWithoutResult());
+        model.addAttribute("allDisciplines", getDisciplinesWithoutLiveResult());
         model.addAttribute("addLiveResultUserInput", new AddLiveResultUserInput());
-        return "init-add-live-result-choose-count";
+        return "init-add-live-result";
     }
 
-    @PostMapping("/init-add-live-result/choose-count")
+    @PostMapping("/init-add-live-result")
     public String processAddResultChooseCount(Model model, @Valid @ModelAttribute AddLiveResultUserInput addLiveResultUserInput, BindingResult result) {
         log.info("post choose count, addliveresult: " + addLiveResultUserInput);
 
         if (result.hasErrors()) {
             log.info("Error");
-            model.addAttribute("allDisciplines", getDisciplinesWithoutResult());
-            return "init-add-live-result-choose-count";
+            model.addAttribute("allDisciplines", getDisciplinesWithoutLiveResult());
+            return "init-add-live-result";
         }
 
         model.addAttribute("addLiveResultUserInput", addLiveResultUserInput);
@@ -75,10 +75,34 @@ public class AddLiveResultController {
         // Store empty slots for all levels in database
         saveEmptySlotsIfNotInDB(d, participantCount);
 
-        return "init-add-live-result-choose-level";
+        return "add-live-result-choose-level";
     }
 
-    @PostMapping("/init-add-live-result/choose-level")
+    @GetMapping("/add-live-result/choose-discipline")
+    public String addLiveResultChooseLevel(Model model) {
+        log.info("addLiveResult - choose discipline");
+        model.addAttribute("allDisciplines", getDisciplinesWithLiveResult());
+        model.addAttribute("addLiveResultUserInput", new AddLiveResultUserInput());
+        return "add-live-result-choose-discipline";
+    }
+
+    @PostMapping("/add-live-result/choose-discipline")
+    public String processAddLiveResultChooseLevel(Model model, AddLiveResultUserInput addLiveResultUserInput) {
+        log.info(addLiveResultUserInput.toString());
+
+        int participantCount = calculateParticipantCount(addLiveResultUserInput.getDisciplineId());
+        addLiveResultUserInput.setParticipantCount(participantCount);
+
+        model.addAttribute("addLiveResultUserInput", addLiveResultUserInput);
+
+        Discipline d = disciplineRepository.findById(addLiveResultUserInput.getDisciplineId());
+        model.addAttribute("discipline", d);
+
+        return "add-live-result-choose-level";
+    }
+
+
+    @PostMapping("/add-live-result/choose-level")
     public String processAddResultChooseLevel(Model model, AddLiveResultUserInput addLiveResultUserInput) {
         log.info("post choose level, addliveresult: " + addLiveResultUserInput);
 
@@ -121,10 +145,10 @@ public class AddLiveResultController {
         model.addAttribute("liveResultListCreation", resultList);
         Discipline d = disciplineRepository.findById(addLiveResultUserInput.getDisciplineId());
         model.addAttribute("discipline", d);
-        return "add-live-results-for-discipline";
+        return "add-live-result-for-discipline";
     }
 
-    @PostMapping("/save-live-results")
+    @PostMapping("/save-live-result")
     public String processAddResult(Model model, LiveResultListCreation liveResultListCreation, BindingResult bindingResult) {
         log.info("save-live-results");
         log.info(liveResultListCreation.getResults().toString());
@@ -149,19 +173,32 @@ public class AddLiveResultController {
             Discipline d = disciplineRepository.findById(liveResultListCreation.getResults().get(0).getDisciplineId());
             model.addAttribute("discipline", d);
 
-            return "add-live-results-for-discipline";
+            return "add-live-result-for-discipline";
         }
 
         liveResultRepository.updateAll(liveResultListCreation.getResults());
         return "redirect:/admin/live-results";
     }
 
-    private Iterable<Discipline> getDisciplinesWithoutResult() {
+    private Iterable<Discipline> getDisciplinesWithoutLiveResult() {
         return disciplineRepository.findAll()
                 .stream()
                 .filter(discipline -> !liveResultRepository.hasDisciplineId(discipline.getId()))
-                .filter(discipline -> discipline.isCup())
+                .filter(Discipline::isCup)
                 .collect(Collectors.toList());
+    }
+
+    private Iterable<Discipline> getDisciplinesWithLiveResult() {
+        return disciplineRepository.findAll()
+                .stream()
+                .filter(discipline -> liveResultRepository.hasDisciplineId(discipline.getId()))
+                .filter(Discipline::isCup)
+                .collect(Collectors.toList());
+    }
+
+    private int calculateParticipantCount(Long disciplineId) {
+        List<Long> list = liveResultRepository.findAllParticipantIdsByDisciplineId(disciplineId);
+        return list.size();
     }
 
     private void saveEmptySlotsIfNotInDB(Discipline discipline, int participantCount) {
