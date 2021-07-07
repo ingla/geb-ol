@@ -44,7 +44,7 @@ public class LiveResultsCalculationService {
             slotCount += getSlotCountForLevel(level);
         }
         int ceil = (int) Math.ceil(log2);
-        slotCount += getLeftoverCount(ceil, participantCount);
+        slotCount += getCountMatchesInExtraLevel(ceil, participantCount)*2;
         return slotCount;
     }
 
@@ -56,7 +56,7 @@ public class LiveResultsCalculationService {
         return floor.equals(ceil) || (level < floor);
     }
 
-    public static int getLeftoverCount(int level, int participantCount) {
+    public static int getCountMatchesInExtraLevel(int level, int participantCount) {
         double log2 = Math.log(participantCount) / Math.log(2);
         double floor = Math.floor(log2);
 
@@ -65,13 +65,13 @@ public class LiveResultsCalculationService {
         }
 
         int leftovers = participantCount - (int) Math.pow(2, floor);
-        return leftovers*2;
+        return leftovers;
     }
 
     public static List<Integer> getPlacesToBeFilled(int level, int leftoverCount) {
         List<Integer> list = new ArrayList<Integer>();
-        for (int i = 0; i < leftoverCount/2; i++) {
-            int correctMatch = table(level, i);
+        for (int i = 0; i < leftoverCount; i++) {
+            int correctMatch = getNthBestPlace(level, i);
 
             list.add(correctMatch*2);
             list.add(correctMatch*2+1);
@@ -79,18 +79,23 @@ public class LiveResultsCalculationService {
         return list;
     }
 
-    private static int table (int level, int place) {
+    private static int getNthBestPlace(int level, int n) {
         if (level == 0) {
             return 0;
         }
         int half = (int) Math.pow(2,(level-1));
-        if (place >= half) {
-            return opponent(table(level,place - half));
+        if (n >= half) {
+            return getOpponentPlace(getNthBestPlace(level, n - half));
         } else {
-            return nextOuterSlot(level, table(level-1, place));
+            return getBestChildBasedOnColor(level, getNthBestPlace(level-1, n));
         }
     }
-    private static int opponent (int place) { // WARNING gives wrong answer for level 0. Avoid < 4 participants
+
+    /**
+     * WARNING gives wrong answer for level 0. Avoid < 4 participants
+     */
+    private static int getOpponentPlace(int place) { 
+        
         if (place % 2 == 0) {
             return place + 1;
         }
@@ -98,23 +103,23 @@ public class LiveResultsCalculationService {
             return place - 1;
         }
     }
-    private static int nextOuterSlot (int level, int place) {
+    private static int getBestChildBasedOnColor(int level, int parentPlace) {
 
         int blacks = 0;
         for (int i = 0; i < (level + 1); i++){ // count black cells in inward-path
-            if (((level - i) + (int)(place / Math.pow(2, i))) % 2 == 0){
+            if (((level - i) + (int)(parentPlace / Math.pow(2, i))) % 2 == 0){
                 blacks += 1;
             }
         }
-        log.info("level " + level + " place " + place + " blacks " + blacks);
+        log.info("level " + level + " place " + parentPlace + " blacks " + blacks);
         if (blacks * 2 < level + 1) {
-            return 2 * place + ((level + 1) % 2);  //the black child
+            return 2 * parentPlace + ((level + 1) % 2);  //the black child
         }
         else if (blacks * 2 > level + 1) {
-            return 2 * place + (level % 2);  //the white child
+            return 2 * parentPlace + (level % 2);  //the white child
         }
         else {
-            return 2 * place + ((level + place  + 1) % 2);  //the opposite child
+            return 2 * parentPlace + ((level + parentPlace + 1) % 2);  //the opposite child
         }
     }
 }

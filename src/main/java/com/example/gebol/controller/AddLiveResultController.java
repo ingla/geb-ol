@@ -89,7 +89,7 @@ public class AddLiveResultController {
 
         int level = addLiveResultUserInput.getLevel();
         int participantCount = addLiveResultUserInput.getParticipantCount();
-        int leftoverCount = LiveResultsCalculationService.getLeftoverCount(level, participantCount);
+        int leftoverCount = LiveResultsCalculationService.getCountMatchesInExtraLevel(level, participantCount);
         double placesCount = LiveResultsCalculationService.getSlotCountForLevel(level);
 
         if (leftoverCount > 0) {
@@ -185,7 +185,7 @@ public class AddLiveResultController {
                     emptySlots.add(r);
                 }
             } else {
-                int leftovers = LiveResultsCalculationService.getLeftoverCount(level, participantCount);
+                int leftovers = LiveResultsCalculationService.getCountMatchesInExtraLevel(level, participantCount);
                 List<Integer> placesToBeFilled = LiveResultsCalculationService.getPlacesToBeFilled(level, leftovers);
                 for (int place : placesToBeFilled) {
                     LiveResult r = new LiveResult();
