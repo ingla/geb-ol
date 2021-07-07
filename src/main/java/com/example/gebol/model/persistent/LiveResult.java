@@ -14,19 +14,20 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class LiveResult {
 
-    public LiveResult(Long disciplineId, Long participantId, int level, int place, int score) {
+    public LiveResult(Long disciplineId, Long participantId, int level, int place, int score, Boolean knockedOut) {
         this.disciplineId = disciplineId;
         this.participantId = participantId;
         this.level = level;
         this.place = place;
         this.score = score;
+        this.knockedOut = knockedOut;
     }
 
     @NotNull
     private Long disciplineId;
 
     @NotNull
-    private Long participantId;
+    private Long participantId = -1L;
 
     @NotNull
     private Integer level;

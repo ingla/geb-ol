@@ -12,11 +12,12 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class DisciplineLiveResult {
 
-    public DisciplineLiveResult(String participantName, int level, int place, int score) {
+    public DisciplineLiveResult(String participantName, int level, int place, int score, Boolean knockedOut) {
         this.participantName = participantName;
         this.level = level;
         this.place = place;
         this.score = score;
+        this.knockedOut = knockedOut;
     }
 
     @NotNull
@@ -30,4 +31,7 @@ public class DisciplineLiveResult {
 
     @NotNull
     private int score;
+
+    @NotNull
+    private Boolean knockedOut;
 }

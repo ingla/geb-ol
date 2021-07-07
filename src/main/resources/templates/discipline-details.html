@@ -103,6 +103,7 @@
                             windowResized();
                             textAlign(CENTER, CENTER);
                             strokeCap(SQUARE);
+                            textFont('Roboto');
                             noLoop();
                         }
 
@@ -120,23 +121,30 @@
                         }
 
                         function drawSlot(liveResult) {
-                            const gap = PI/500;
+                            const gap = PI/400;
                             const lvl = liveResult.level;
                             const slots = lvl == 0 ? 4 : pow(2, lvl + 1);
                             const weight = (radius(lvl) - radius(lvl - 1))/2 - lvl;
                             const arcStart = TWO_PI/slots * liveResult.place;
                             const arcEnd = arcStart + TWO_PI/slots;
                             const arcDiameter = radius(lvl) - weight;
+                            var knockedOutColor = 128;
 
-                            stroke(208 - 24 * ((liveResult.place + lvl) % 2));
+                            stroke(184 + 24 * ((liveResult.place + lvl) % 2));
                             strokeWeight(weight);
 
-                            arc(0, 0, arcDiameter, arcDiameter, arcStart + gap, arcEnd - gap);
+                            if(liveResult.place % 2 == 0 ^ lvl == 0){
+                                arc(0, 0, arcDiameter, arcDiameter, arcStart + gap, arcEnd);
+                            } else {
+                                arc(0, 0, arcDiameter, arcDiameter, arcStart, arcEnd - gap);
+                            }
 
                             push();
-                            rotate(arcStart + PI/slots);
-                            noStroke();
-                            fill(0);
+                            if (liveResult.place % 2 == 0) {
+                                rotate(arcStart + PI/slots + gap/2);
+                            } else {
+                                rotate(arcStart + PI/slots - gap/2);
+                            }
 
                             if (liveResult.score == -1){
                                 liveResult.score = ""
@@ -144,16 +152,13 @@
                             else{
                                 liveResult.score = str(liveResult.score)
                             }
-
                             if (lvl != 0) {
-                                translate(radius(lvl + 1) - radius(lvl), 0);
+                                translate(radius(lvl + 1) - radius(lvl) + lvl * 2, 0);
                                 if (lvl < 4) {
                                     rotate(HALF_PI);
-
                                     if ((liveResult.place * 4 + slots) % (slots * 4) >= slots * 2) {
                                         rotate(PI);
                                     }
-
                                 } else if (liveResult.place * 2 >= slots) {
                                     rotate(PI);
                                 }
@@ -162,12 +167,19 @@
                                 rotate(HALF_PI)
                                 rotate(-(arcStart + PI/slots));
                             }
+                            noStroke();
+                            if (!liveResult.knockedOut) {
+                                textFont('Roboto');
+                            } else {
+                                textFont('Roboto Light');
+                            }
+                            fill(knockedOutColor * liveResult.knockedOut);
+                            textFont('Roboto');
                             text(liveResult.participantName, 0, 0);
                             pop();
 
                             push()
                             const scoreBoxWidth = width/80;
-
                             const scoreBoxHeight = height/80;
 
                             rotate(arcStart + PI / slots);
@@ -205,8 +217,9 @@
                             }
                             rectMode(RADIUS);
                             noStroke();
-                            fill(208 - 24 * ((liveResult.place + lvl+1) % 2));
-                            rect(buff*1.5, 0, scoreBoxWidth, scoreBoxHeight);
+                            fill(208 - 24 * ((liveResult.place + lvl) % 2));
+                            rect(buff * 1.5, 0, scoreBoxWidth, scoreBoxHeight);
+
                             fill(0);
                             text(liveResult.score,  buff*1.5, 0);
                             pop();
