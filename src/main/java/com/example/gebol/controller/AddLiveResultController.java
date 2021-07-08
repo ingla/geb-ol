@@ -98,6 +98,10 @@ public class AddLiveResultController {
         Discipline d = disciplineRepository.findById(addLiveResultUserInput.getDisciplineId());
         model.addAttribute("discipline", d);
 
+        List<Integer> validLevels = LiveResultsCalculationService.getValidLevels(participantCount);
+        log.info("Calculated valid levels: " + validLevels);
+        model.addAttribute("validLevels", validLevels);
+
         return "add-live-result-choose-level";
     }
 
@@ -154,10 +158,10 @@ public class AddLiveResultController {
         log.info(liveResultListCreation.getResults().toString());
 
         // Validate input - all participants in a level should be unique
-        Set<Long> uniqueParticipants = new HashSet<>();
+        Set<Long> uniqueParticipants = new HashSet<>(); // TODO: Fix unique check
         List<LiveResult> results = liveResultListCreation.getResults();
         for (LiveResult res : results) {
-            uniqueParticipants.add(res.getParticipantId());
+                uniqueParticipants.add(res.getParticipantId());
         }
         if (uniqueParticipants.size() != results.size()) {
             ObjectError objectError = new ObjectError(
