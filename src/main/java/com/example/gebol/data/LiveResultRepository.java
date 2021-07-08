@@ -12,4 +12,5 @@ public interface LiveResultRepository {
     List<LiveResult> findByDisciplineId(Long disciplineId);
     Boolean hasDisciplineId(Long disciplineId);
     List<Long> findAllDisciplineIds();
+    List<Long> findAllParticipantIdsByDisciplineId(Long disciplineId);
 }

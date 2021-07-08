@@ -26,7 +26,7 @@
 <main>
     <h2 th:text="${discipline.name}"></h2>
     <h3>Legg til plassering</h3>
-        <form action="#" method="post" th:object="${liveResultListCreation}" th:action="@{/save-live-results}">
+        <form action="#" method="post" th:object="${liveResultListCreation}" th:action="@{/save-live-result}">
             <span th:if="${#fields.hasErrors('global')}">
                 <p th:each="err: ${#fields.errors('global')}"
                    th:text="${err}"
@@ -52,6 +52,9 @@
                             <option th:each="participant : ${allParticipants}"
                                     th:value="${participant.id}"
                                     th:text="${participant.name}">
+                            </option>
+                            <option text=""
+                                    th:value="${-1}">
                             </option>
                         </select>
                         </td>
