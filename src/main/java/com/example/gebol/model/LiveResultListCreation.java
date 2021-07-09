@@ -11,6 +11,7 @@ import java.util.List;
 public class LiveResultListCreation {
 
     private List<LiveResult> results;
+    private int participantCount;
 
     public LiveResultListCreation() {
         results = new ArrayList<>();

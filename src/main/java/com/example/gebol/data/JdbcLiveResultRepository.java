@@ -85,6 +85,12 @@ public class JdbcLiveResultRepository implements LiveResultRepository {
         return jdbc.queryForList(sql, Long.class, disciplineId);
     }
 
+    @Override
+    public List<LiveResult> findAllByDisciplineId(Long disciplineId) {
+        String sql = "select * from LiveResult where disciplineId = (?)";
+        return jdbc.query(sql, this::mapRowToResult, disciplineId);
+    }
+
     private LiveResult mapRowToResult(ResultSet rs, int rowNum) throws SQLException {
         LiveResult r = new LiveResult();
         r.setDisciplineId(rs.getLong("disciplineId"));

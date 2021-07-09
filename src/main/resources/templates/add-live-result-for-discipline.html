@@ -73,6 +73,8 @@
                                th:field="*{results[__${itemStat.index}__].level}"/>
                     </tr>
                 </table>
+                <input type="hidden"
+                       th:field="*{participantCount}"/>
                 <input type="submit" id="submitButton" th:value="Lagre">
             </fieldset>
         </form>
