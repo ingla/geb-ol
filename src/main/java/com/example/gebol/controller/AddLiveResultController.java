@@ -23,6 +23,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -44,15 +45,15 @@ public class AddLiveResultController {
     }
 
     @GetMapping("/init-add-live-result")
-    public String addLiveResultChooseCount(Model model) {
+    public String addLiveResultChooseCountAndDisicpline(Model model) {
         log.info("addLiveResult");
         model.addAttribute("allDisciplines", getDisciplinesWithoutLiveResult());
         model.addAttribute("addLiveResultUserInput", new AddLiveResultUserInput());
         return "init-add-live-result";
     }
 
-    @PostMapping("/init-add-live-result")
-    public String processAddResultChooseCount(Model model, @Valid @ModelAttribute AddLiveResultUserInput addLiveResultUserInput, BindingResult result) {
+    @PostMapping("/init-add-live-result/choose-level")
+    public String addLiveResultChooseLevel(Model model, @Valid @ModelAttribute AddLiveResultUserInput addLiveResultUserInput, BindingResult result) {
         log.info("post choose count, addliveresult: " + addLiveResultUserInput);
 
         if (result.hasErrors()) {
@@ -72,9 +73,6 @@ public class AddLiveResultController {
         Discipline d = disciplineRepository.findById(addLiveResultUserInput.getDisciplineId());
         model.addAttribute("discipline", d);
 
-        // Store empty slots for all levels in database
-        saveEmptySlotsIfNotInDB(d, participantCount);
-
         return "add-live-result-choose-level";
     }
 
@@ -86,11 +84,12 @@ public class AddLiveResultController {
         return "add-live-result-choose-discipline";
     }
 
-    @PostMapping("/add-live-result/choose-discipline")
+    @PostMapping("/add-live-result/choose-level")
     public String processAddLiveResultChooseLevel(Model model, AddLiveResultUserInput addLiveResultUserInput) {
         log.info(addLiveResultUserInput.toString());
 
         int participantCount = calculateParticipantCount(addLiveResultUserInput.getDisciplineId());
+        log.info("processAddLiveResultChooseLevel, participantCount= " + participantCount);
         addLiveResultUserInput.setParticipantCount(participantCount);
 
         model.addAttribute("addLiveResultUserInput", addLiveResultUserInput);
@@ -106,14 +105,15 @@ public class AddLiveResultController {
     }
 
 
-    @PostMapping("/add-live-result/choose-level")
-    public String processAddResultChooseLevel(Model model, AddLiveResultUserInput addLiveResultUserInput) {
+    @PostMapping("/add-live-result/select-participants")
+    public String selectParticipantsAndResult(Model model, AddLiveResultUserInput addLiveResultUserInput) {
         log.info("post choose level, addliveresult: " + addLiveResultUserInput);
 
         Iterable<Participant> allParticipants = participantRepository.findAll();
         model.addAttribute("allParticipants", allParticipants);
 
         LiveResultListCreation resultList = new LiveResultListCreation();
+        resultList.setParticipantCount(addLiveResultUserInput.getParticipantCount());
 
         int level = addLiveResultUserInput.getLevel();
         int participantCount = addLiveResultUserInput.getParticipantCount();
@@ -146,6 +146,22 @@ public class AddLiveResultController {
             }
         }
 
+        for (LiveResult r : resultList.getResults()) {
+            try {
+                LiveResult liveResultFromDB = liveResultRepository.findOne(
+                        r.getDisciplineId(),
+                        r.getLevel(),
+                        r.getPlace()
+                );
+                r.setScore(liveResultFromDB.getScore());
+                r.setParticipantId(liveResultFromDB.getParticipantId());
+                r.setKnockedOut(liveResultFromDB.getKnockedOut());
+            } catch (Exception e) {
+                // Item was not in database
+                // No biggie. Just won't get the fields prefilled
+            }
+        }
+
         model.addAttribute("liveResultListCreation", resultList);
         Discipline d = disciplineRepository.findById(addLiveResultUserInput.getDisciplineId());
         model.addAttribute("discipline", d);
@@ -157,9 +173,15 @@ public class AddLiveResultController {
         log.info("save-live-results");
         log.info(liveResultListCreation.getResults().toString());
 
+        // TODO: Find a less ugly way of getting the discipline
+        Discipline d = disciplineRepository.findById(liveResultListCreation.getResults().get(0).getDisciplineId());
+
         // Validate input - all participants in a level should be unique
         Set<Long> uniqueParticipants = new HashSet<>(); // TODO: Fix unique check
-        List<LiveResult> results = liveResultListCreation.getResults();
+        List<LiveResult> results = liveResultListCreation.getResults()
+                .stream().filter(liveResult -> liveResult.getParticipantId() != -1)
+                .collect(Collectors.toList());
+
         for (LiveResult res : results) {
                 uniqueParticipants.add(res.getParticipantId());
         }
@@ -173,13 +195,11 @@ public class AddLiveResultController {
             Iterable<Participant> allParticipants = participantRepository.findAll();
             model.addAttribute("allParticipants", allParticipants);
 
-            // TODO: Find a less ugly way of getting the discipline
-            Discipline d = disciplineRepository.findById(liveResultListCreation.getResults().get(0).getDisciplineId());
             model.addAttribute("discipline", d);
-
             return "add-live-result-for-discipline";
         }
 
+        saveEmptySlotsIfNotInDB(d, liveResultListCreation.getParticipantCount());
         liveResultRepository.updateAll(liveResultListCreation.getResults());
         return "redirect:/admin/live-results";
     }
@@ -201,8 +221,26 @@ public class AddLiveResultController {
     }
 
     private int calculateParticipantCount(Long disciplineId) {
-        List<Long> list = liveResultRepository.findAllParticipantIdsByDisciplineId(disciplineId);
-        return list.size();
+        // Count number of slots in the outermost and next outermost level
+        List<LiveResult> list = liveResultRepository.findAllByDisciplineId(disciplineId);
+
+        int maxLevel = list.stream()
+                .mapToInt(LiveResult::getLevel)
+                .max()
+                .orElseThrow(NoSuchElementException::new);
+
+        List<LiveResult> placesInOuterLevel = list.stream()
+                .filter(liveResult -> (liveResult.getLevel() == maxLevel))
+                .collect(Collectors.toList());
+
+        double fullSlotCount = LiveResultsCalculationService.getSlotCountForLevel(maxLevel);
+        if (placesInOuterLevel.size() == fullSlotCount) {
+            // The outer level is full
+            return (int) fullSlotCount;
+        }
+
+        double slotsInNextOuterLevel = LiveResultsCalculationService.getSlotCountForLevel(maxLevel - 1);
+        return (int) (slotsInNextOuterLevel + placesInOuterLevel.size()/2);
     }
 
     private void saveEmptySlotsIfNotInDB(Discipline discipline, int participantCount) {

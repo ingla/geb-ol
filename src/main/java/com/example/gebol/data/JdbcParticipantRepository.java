@@ -30,7 +30,6 @@ public class JdbcParticipantRepository implements ParticipantRepository {
 
     public List<Participant> findAll() {
         return jdbc.query(
-
                 "select * from Participant",
                 this::mapRowToParticipant);
     }

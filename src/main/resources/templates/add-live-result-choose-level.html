@@ -27,7 +27,7 @@
     <h2 th:text="${discipline.name}"></h2>
     <h3>Velg nivå</h3>
     <br>
-    <form th:action="@{/add-live-result/choose-level}"
+    <form th:action="@{/add-live-result/select-participants}"
           method="post" th:object="${addLiveResultUserInput}">
         <select th:field="*{level}">
             <option th:each="level : ${validLevels}"
