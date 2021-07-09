@@ -97,6 +97,15 @@ public class JdbcLiveResultRepository implements LiveResultRepository {
         jdbc.update(sql, disciplineId);
     }
 
+    @Override
+    public LiveResult findOne(Long disciplineId, int bracketLevel, int place) {
+        String sql = "select * from LiveResult where disciplineId = (?) and bracketLevel = (?) and place = (?)";
+        return jdbc.queryForObject(
+                sql,
+                this::mapRowToResult,
+                disciplineId, bracketLevel, place);
+    }
+
     private LiveResult mapRowToResult(ResultSet rs, int rowNum) throws SQLException {
         LiveResult r = new LiveResult();
         r.setDisciplineId(rs.getLong("disciplineId"));

@@ -29,7 +29,7 @@
     <br>
     <span th:if="${allDisciplines.size() == 0}">Fant ingen cup-grener med resultat fra før</span>
     <form th:if="${allDisciplines.size() > 0}"
-          th:action="@{/add-live-result/select-participants}"
+          th:action="@{/add-live-result/choose-level}"
           method="post" th:object="${addLiveResultUserInput}">
 
         <select th:field="*{disciplineId}">

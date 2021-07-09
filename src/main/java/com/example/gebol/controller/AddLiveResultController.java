@@ -106,7 +106,7 @@ public class AddLiveResultController {
 
 
     @PostMapping("/add-live-result/select-participants")
-    public String processAddResultChooseLevel(Model model, AddLiveResultUserInput addLiveResultUserInput) {
+    public String selectParticipantsAndResult(Model model, AddLiveResultUserInput addLiveResultUserInput) {
         log.info("post choose level, addliveresult: " + addLiveResultUserInput);
 
         Iterable<Participant> allParticipants = participantRepository.findAll();
@@ -143,6 +143,22 @@ public class AddLiveResultController {
                 r.setDisciplineId(addLiveResultUserInput.getDisciplineId());
                 r.setLevel(addLiveResultUserInput.getLevel());
                 resultList.addResult(r);
+            }
+        }
+
+        for (LiveResult r : resultList.getResults()) {
+            try {
+                LiveResult liveResultFromDB = liveResultRepository.findOne(
+                        r.getDisciplineId(),
+                        r.getLevel(),
+                        r.getPlace()
+                );
+                r.setScore(liveResultFromDB.getScore());
+                r.setParticipantId(liveResultFromDB.getParticipantId());
+                r.setKnockedOut(liveResultFromDB.getKnockedOut());
+            } catch (Exception e) {
+                // Item was not in database
+                // No biggie. Just won't get the fields prefilled
             }
         }
 

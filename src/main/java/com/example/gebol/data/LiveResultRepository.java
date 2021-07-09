@@ -5,6 +5,7 @@ import com.example.gebol.model.persistent.LiveResult;
 import java.util.List;
 
 public interface LiveResultRepository {
+    LiveResult findOne(Long disciplineId, int bracketLevel, int place);
     LiveResult save(LiveResult liveResult);
     LiveResult update(LiveResult liveResult);
     List<LiveResult> saveAll(List<LiveResult> liveResults);
