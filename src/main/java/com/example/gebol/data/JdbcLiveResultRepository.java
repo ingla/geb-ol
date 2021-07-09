@@ -91,6 +91,12 @@ public class JdbcLiveResultRepository implements LiveResultRepository {
         return jdbc.query(sql, this::mapRowToResult, disciplineId);
     }
 
+    @Override
+    public void deleteByDisciplineId(Long disciplineId) {
+        String sql = "delete from LiveResult where disciplineId = (?)";
+        jdbc.update(sql, disciplineId);
+    }
+
     private LiveResult mapRowToResult(ResultSet rs, int rowNum) throws SQLException {
         LiveResult r = new LiveResult();
         r.setDisciplineId(rs.getLong("disciplineId"));

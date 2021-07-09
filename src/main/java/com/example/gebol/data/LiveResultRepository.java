@@ -14,4 +14,5 @@ public interface LiveResultRepository {
     List<Long> findAllDisciplineIds();
     List<LiveResult> findAllByDisciplineId(Long disciplineId);
     List<Long> findAllParticipantIdsByDisciplineId(Long disciplineId);
+    void deleteByDisciplineId(Long disicplineId);
 }
