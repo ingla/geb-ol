@@ -18,7 +18,7 @@ spring:
     url: jdbc:mysql://aar2ocip2i3brk.ctxfvlhgrfdl.eu-west-1.rds.amazonaws.com:3306/ebdb
     username: gebol
     password: gebolgebol
-    initialization-mode: never # Switch to always for first deployment
+    initialization-mode: never # NB: Switch to 'always' when deploying changed database model
 
 server:
   port: 5000
